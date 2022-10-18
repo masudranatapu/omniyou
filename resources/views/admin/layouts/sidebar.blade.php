@@ -6,15 +6,15 @@
       </a>
     </li>
 	 <li class="nav-item">
-      <a href="{{route('admin.course.index')}}" class="nav-link {{ Request::routeIs('admin.course.*') ? 'active' : '' }}">
+      <a href="{{route('admin.client.index')}}" class="nav-link {{ Request::routeIs('admin.client.*') ? 'active' : '' }}">
         <i class="icon ion-ios-home-outline"></i>
-        <span>Courses</span>
+        <span>Clients</span>
       </a>
     </li>
 	 <li class="nav-item">
-      <a href="{{route('admin.student.index')}}" class="nav-link {{ Request::routeIs('admin.student.*') ? 'active' : '' }}">
+      <a href="{{route('admin.worker.index')}}" class="nav-link {{ Request::routeIs('admin.worker.*') ? 'active' : '' }}">
         <i class="icon ion-ios-home-outline"></i>
-        <span>Students</span>
+        <span>Workers</span>
       </a>
     </li>
 

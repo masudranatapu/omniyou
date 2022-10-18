@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\ClientController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\WorkerController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -92,17 +94,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/quiz/view/{id}', [App\Http\Controllers\Admin\AdminController::class, 'QuizView'])->name('quiz.view');
     Route::get('/user/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('quiz.destroy');
 
-    Route::get('courses', [CourseController::class, 'index'])->name('admin.course.index');
-    Route::get('courses/create', [CourseController::class, 'create'])->name('admin.course.create');
-    Route::post('courses/store', [CourseController::class, 'store'])->name('admin.course.store');
-    Route::get('courses/edit/{id}', [CourseController::class, 'edit'])->name('admin.course.edit');
-    Route::post('courses/update/{id}', [CourseController::class, 'update'])->name('admin.course.update');
-    Route::get('courses/delete/{id}', [CourseController::class, 'delete'])->name('admin.course.delete');
-    //student
-    Route::get('students', [StudentController::class, 'index'])->name('admin.student.index');
-    Route::get('students/create', [StudentController::class, 'create'])->name('admin.student.create');
-    Route::post('students/store', [StudentController::class, 'store'])->name('admin.student.store');
-    Route::get('students/edit/{id}', [StudentController::class, 'edit'])->name('admin.student.edit');
-    Route::post('students/update/{id}', [StudentController::class, 'update'])->name('admin.student.update');
-    Route::get('students/delete/{id}', [StudentController::class, 'destroy'])->name('admin.student.delete');
+    Route::get('clients', [ClientController::class, 'index'])->name('admin.client.index');
+    Route::get('clients/create', [ClientController::class, 'create'])->name('admin.client.create');
+    Route::post('clients/store', [ClientController::class, 'store'])->name('admin.client.store');
+    Route::get('clients/edit/{id}', [ClientController::class, 'edit'])->name('admin.client.edit');
+    Route::post('clients/update/{id}', [ClientController::class, 'update'])->name('admin.client.update');
+    Route::get('clients/delete/{id}', [ClientController::class, 'delete'])->name('admin.client.delete');
+    //worker
+    Route::get('workers', [WorkerController::class, 'index'])->name('admin.worker.index');
+    Route::get('workers/create', [WorkerController::class, 'create'])->name('admin.worker.create');
+    Route::post('workers/store', [WorkerController::class, 'store'])->name('admin.worker.store');
+    Route::get('workers/edit/{id}', [WorkerController::class, 'edit'])->name('admin.worker.edit');
+    Route::post('workers/update/{id}', [WorkerController::class, 'update'])->name('admin.worker.update');
+    Route::get('workers/delete/{id}', [WorkerController::class, 'destroy'])->name('admin.worker.delete');
 });

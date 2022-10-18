@@ -1,16 +1,16 @@
 @extends('admin.layouts.app')
-@section('title', 'Quiz - Course Create')
+@section('title', 'Client Create')
 @section('content')
  <div class="card mb-4">
     <div class="row">
           <div class="col-6">
               <div class="card-header page_title">
-                  <h3>Course Create</h3>
+                  <h3>Client Create</h3>
               </div>
           </div>
           <div class="col-6">
               <div class="float-right p-2">
-                  <a href="{{route('admin.course.index')}}" class="btn btn-primary">Back</a>
+                  <a href="{{route('admin.client.index')}}" class="btn btn-primary">Back</a>
               </div>
           </div>
     </div>
@@ -19,17 +19,38 @@
     <div class="col-12">
        <div class="card">
           <div class="card-header">
-            <h6>Course Create</h6>
+            <h6>Client Create</h6>
           </div>
           <div class="card-body">
-              <form action="{{route('admin.course.store')}}" method="post">
+              <form action="{{route('admin.client.store')}}" method="post">
                 @csrf
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-6">
                         <div class="mb-3">
-                           <label class="form-control-label">Course Name <span class="tx-danger">*</span></label>
-                           <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter course name">
+                           <label class="form-control-label">Client Name <span class="tx-danger">*</span></label>
+                           <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter client name">
                            @error('name')
+                            <div class="text-danger">{{$message}}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3">
+                           <label class="form-control-label">Client Email </label>
+                           <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter client email">
+                           @error('email')
+                            <div class="text-danger">{{$message}}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3">
+                           <label class="form-control-label">Client Phone </label>
+                           <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter client phone">
+                           @error('phone')
+                            <div class="text-danger">{{$message}}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3">
+                           <label class="form-control-label">Client Address </label>
+                           <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Enter client address">
+                           @error('address')
                             <div class="text-danger">{{$message}}</div>
                            @enderror
                         </div>
@@ -41,7 +62,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                           <label class="form-control-label">Course Status <span class="tx-danger">*</span></label>
+                           <label class="form-control-label">Client Status <span class="tx-danger">*</span></label>
                            <select name="status" class="form-control" required>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>

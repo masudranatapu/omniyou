@@ -32,7 +32,7 @@
                 </a>
               </div><!-- col -->
               <div class="col-md-3 mb-2">
-                <a href="{{ route('admin.course.index') }}" class="shortcut-icon">
+                <a href="{{ route('admin.client.index') }}" class="shortcut-icon">
                   <div>
                     <i class="icon ion-ios-book"></i>
                     <h5>{{ $courses?$courses:0 }}</h5>
@@ -41,7 +41,7 @@
                 </a>
               </div><!-- col -->
               <div class="col-md-3 mb-2">
-                <a href="{{ route('admin.student.index') }}" class="shortcut-icon">
+                <a href="{{ route('admin.worker.index') }}" class="shortcut-icon">
                   <div>
                     <i class="icon ion-ios-people"></i>
                     <h5>{{ $students?$students:0 }}</h5>

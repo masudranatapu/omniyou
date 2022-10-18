@@ -8,18 +8,18 @@
         }
     </style>
 @endsection
-@section('title', 'Quiz - Students Create')
+@section('title', 'Workers Create')
 @section('content')
     <div class="card mb-4">
         <div class="row">
             <div class="col-6">
                 <div class="card-header page_title">
-                    <h3>Students Create</h3>
+                    <h3>Workers Create</h3>
                 </div>
             </div>
             <div class="col-6">
                 <div class="float-right p-2">
-                    <a href="{{ route('admin.student.index') }}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('admin.worker.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
@@ -28,55 +28,43 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Student Create</h6>
+                    <h6>Worker Create</h6>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.student.store') }}" method="post">
+                    <form action="{{ route('admin.worker.store') }}" method="post">
                         @csrf
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label class="form-control-label">Student Name <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">Worker Name <span class="tx-danger">*</span></label>
                                     <input type="text" name="name" value="{{ old('name') }}" class="form-control"
-                                        placeholder="Enter student name">
+                                        placeholder="Enter worker name">
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-control-label">Student Email <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">Worker Email <span class="tx-danger">*</span></label>
                                     <input type="text" name="email" value="{{ old('email') }}" class="form-control"
-                                        placeholder="Enter student email">
+                                        placeholder="Enter worker email">
                                     @error('email')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-control-label">Course</label>
+                                    <label class="form-control-label">Client</label>
                                     {{-- <input type="text" name="course_id" class="form-control" placeholder="Enter Course"> --}}
-                                    <select id="multiple_checkboxes" name="course_id[]" class="form-select" multiple>
-                                        @foreach ($courses as $item)
-                                            @php
-                                                $qsn = DB::table('quiz_questions')
-                                                    ->where('course_id', $item->id)
-                                                    ->first();
-                                                if ($qsn) {
-                                                    $ans = DB::table('quiz_answers')
-                                                        ->where('question_no', $qsn->id)
-                                                        ->first();
-                                                }
-                                            @endphp
-                                            @if (isset($qsn) && isset($ans))
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endif
+                                    <select id="multiple_checkboxes" name="assign_client[]" class="form-select" multiple>
+                                        @foreach ($clients as $item)
+                                                <option value="{{ $item->id }}"{{ old('assign_client') ? in_array($item->id, old('assign_client')) ? 'selected' : '' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('course_id')
+                                    @error('assign_client')
                                         <div class="text-danger">{{ 'The course is required.' }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-control-label">Course Status <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">Worker Status <span class="tx-danger">*</span></label>
                                     <select name="status" class="form-control" required>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>

@@ -1,17 +1,17 @@
 @extends('admin.layouts.app')
-@section('title', 'Quiz - Course List')
+@section('title', 'Workers')
 @section('course_actice') active @endsection
 @section('content')
     <div class="card mb-4">
         <div class="row">
             <div class="col-6">
                 <div class="card-header page_title">
-                    <h3>Students List</h3>
+                    <h3>Workers List</h3>
                 </div>
             </div>
             <div class="col-6">
                 <div class="float-right p-2">
-                    <a href="{{ route('admin.student.create') }}" class="btn btn-primary">Add Student</a>
+                    <a href="{{ route('admin.worker.create') }}" class="btn btn-primary">Add Worker</a>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Students List</h6>
+                    <h6>Workers List</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-wrapper">
@@ -30,35 +30,34 @@
                                     <th class="text-center">SL</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-center">Course</th>
+                                    {{-- <th class="text-center">client</th> --}}
                                     <th class="text-center">Initial Password</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($students as $key => $row)
+                                @foreach ($workers as $key => $row)
                                     <tr class="text-center">
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $row->name }} </td>
                                         <td>{{ $row->email }} </td>
-                                        <td>
-                                            @if(isset($row->course_id))
-                                            @foreach (json_decode($row->course_id) as $item)
-                                            @php
-                                                        $course = DB::table('courses')
+                                        {{-- <td>
+                                            @if ($row->client_id != '')
+                                                @foreach (json_decode($row->client_id) as $item)
+                                                    @php
+                                                        $client = DB::table('clients')
                                                             ->where('id', $item)
                                                             ->first();
                                                     @endphp
                                                     <span class="badge badge-primary">
-                                                        {{ $course->name }}
+                                                        {{ $client->name }}
                                                     </span>
-                                                    @endforeach
+                                                @endforeach
                                             @else
-                                            <span>N/A</span>
-
+                                                <span>N/A</span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $row->str_pass }} </td>
                                         <td>
                                             @if ($row->status == 1)
@@ -68,11 +67,11 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('admin.student.edit', $row->id) }}"
+                                            <a href="{{ route('admin.worker.edit', $row->id) }}"
                                                 class="btn btn-primary btn-icon">
                                                 <div><i class="fa fa-pencil"></i></div>
                                             </a>
-                                            <a href="{{ route('admin.student.delete', $row->id) }}"
+                                            <a href="{{ route('admin.worker.delete', $row->id) }}"
                                                 class="btn btn-danger btn-icon" id="delete">
                                                 <div><i class="fa fa-trash"></i></div>
                                             </a>
