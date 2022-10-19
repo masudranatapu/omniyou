@@ -104,6 +104,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('workers', [WorkerController::class, 'index'])->name('admin.worker.index');
     Route::get('workers/create', [WorkerController::class, 'create'])->name('admin.worker.create');
     Route::post('workers/store', [WorkerController::class, 'store'])->name('admin.worker.store');
+    Route::get('workers/show/{id}', [WorkerController::class, 'show'])->name('admin.worker.show');
     Route::get('workers/edit/{id}', [WorkerController::class, 'edit'])->name('admin.worker.edit');
     Route::post('workers/update/{id}', [WorkerController::class, 'update'])->name('admin.worker.update');
     Route::get('workers/delete/{id}', [WorkerController::class, 'destroy'])->name('admin.worker.delete');

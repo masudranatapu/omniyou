@@ -35,7 +35,7 @@ class WorkerController extends Controller
      */
     public function create()
     {
-        $clients = DB::table('clients')->where('status', 1)->get();
+        $clients = DB::table('clients')->where('status', 1)->where('worker_id', null)->get();
         return view('admin.workers.create', compact('clients'));
     }
 
@@ -50,6 +50,7 @@ class WorkerController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users,email',
         ]);
+        $client_id = $request->assign_client;
         // dd(($client_id));
 
         $pass = Str::random(8);
@@ -62,8 +63,11 @@ class WorkerController extends Controller
         $data['str_pass'] = $pass;
         $data['role'] = 0;
         $data['created_at'] = Carbon::now();
+        if ($client_id && $request->status == 0) {
+            $notification = array('message' => 'Opps! Cannot add client for inactive worker.', 'alert-type' => 'error',);
+            return redirect()->back()->withInput()->with($notification);
+        }
         $id = DB::table('users')->insertGetId($data);
-        $client_id = $request->assign_client;
         if ($client_id) {
             $clients = DB::table('clients')->whereIn('id', $client_id)->get();
             foreach ($clients as $key => $client) {
@@ -82,7 +86,7 @@ class WorkerController extends Controller
         ];
         Notification::route('mail', $data['email'])->notify(new StudentNotification($userMail));
 
-        $notification = array('message' => 'Worker added successfully.','alert-type' => 'success',);
+        $notification = array('message' => 'Worker added successfully.', 'alert-type' => 'success',);
         return redirect()->route('admin.worker.index')->with($notification);
     }
 
@@ -94,7 +98,9 @@ class WorkerController extends Controller
      */
     public function show($id)
     {
-        //
+        $worker =  DB::table('users')->where('id', $id)->first();
+        $clients = DB::table('clients')->where('worker_id', $id)->get();
+        return view('admin.workers.show', compact('worker', 'clients'));
     }
 
     /**
@@ -105,9 +111,11 @@ class WorkerController extends Controller
      */
     public function edit($id)
     {
-        $clients = DB::table('clients')->where('status', 1)->get();
+        $clients = DB::table('clients')->where('status', 1)->where('worker_id', null)->orWhere('worker_id', $id)->get();
         $worker =  DB::table('users')->where('id', $id)->first();
-        return view('admin.workers.edit', compact('worker', 'clients'));
+        $old_client = DB::table('clients')->where('worker_id', $id)->pluck('id')->toArray();
+        // dd($old_client);
+        return view('admin.workers.edit', compact('worker', 'clients', 'old_client'));
     }
 
     /**
@@ -120,7 +128,7 @@ class WorkerController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'email' => 'required|email|unique:users,email,'.$id
+            'email' => 'required|email|unique:users,email,' . $id
         ]);
         $data = [];
         $data['name'] = $request->name;
@@ -130,17 +138,39 @@ class WorkerController extends Controller
         $data['created_at'] = Carbon::now();
         DB::table('users')->where('id', $id)->update($data);
         $client_id = $request->assign_client;
+        $previous_client = DB::table('clients')->where('worker_id', $id)->pluck('id')->toArray();
+        if (!empty($previous_client) || $client_id && $request->status == 0) {
+            foreach ($previous_client as $key => $value) {
+                DB::table('clients')->where('id', $value)->update(['worker_id' => null]);
+            }
+            $notification = array('message' => 'Client cannot assigned for inactive worker.', 'alert-type' => 'warning',);
+            return redirect()->route('admin.worker.index')->with($notification);
+        }
+
         if ($client_id) {
-            $previous_client = DB::table('clients')->where('worker_id', $id)->pluck('id')->toArray();
             $clients = DB::table('clients')->whereIn('id', $client_id)->pluck('id')->toArray();
-            $mismatch = array_intersect($previous_client, $clients);
-            dd($mismatch);
+            $mismatch = array_diff($previous_client, $clients);
+            // dd($mismatch);
+            if ($mismatch) {
+                // $null_client = DB::table('clients')->whereIn('id', $mismatch)->get();
+                foreach ($mismatch as $key => $value) {
+                    // dd($value);
+                    DB::table('clients')->where('id', $value)->update(['worker_id' => null]);
+                }
+            }
             foreach ($clients as $key => $client) {
-                DB::table('clients')->where('id', $client->id)->update(['worker_id' => $id]);
+                DB::table('clients')->where('id', $client)->update(['worker_id' => $id]);
+            }
+        } else {
+            if (!empty($previous_client)) {
+                foreach ($previous_client as $key => $value) {
+                    DB::table('clients')->where('id', $value)->update(['worker_id' => null]);
+                }
             }
         }
 
-        $notification = array('message' => 'Worker updated successfully.','alert-type' => 'success',);
+
+        $notification = array('message' => 'Worker updated successfully.', 'alert-type' => 'success',);
         return redirect()->route('admin.worker.index')->with($notification);
     }
 
@@ -152,8 +182,14 @@ class WorkerController extends Controller
      */
     public function destroy($id)
     {
+        $previous_client = DB::table('clients')->where('worker_id', $id)->pluck('id')->toArray();
+        if (!empty($previous_client)) {
+            foreach ($previous_client as $key => $value) {
+                DB::table('clients')->where('id', $value)->update(['worker_id' => null]);
+            }
+        }
         DB::table('users')->where('id', $id)->delete();
-        $notification = array('message' => 'Worker deleted successfully.','alert-type' => 'success',);
+        $notification = array('message' => 'Worker deleted successfully.', 'alert-type' => 'success',);
         return redirect()->route('admin.worker.index')->with($notification);
     }
 }

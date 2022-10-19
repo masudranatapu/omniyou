@@ -56,7 +56,7 @@
                                     {{-- <input type="text" name="course_id" class="form-control" value="{{ $worker->course_id }}" placeholder="Enter Course"> --}}
                                     <select id="multiple_checkboxes" name="assign_client[]" class="form-select" multiple>
                                         @foreach ($clients as $item)
-                                                <option value="{{ $item->id }}">
+                                                <option value="{{ $item->id }}" {{ in_array($item->id, $old_client) ? 'selected':'' }} >
                                                     {{ $item->name }}
                                                 </option>
                                         @endforeach

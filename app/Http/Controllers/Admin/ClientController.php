@@ -17,7 +17,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = DB::table('clients')->get();
+        $clients = DB::table('clients')
+        ->leftJoin('users', 'users.id', '=', 'clients.worker_id')
+        ->select('clients.*', 'users.name as worker_name')
+        ->get();
         return view('admin.client.index', compact('clients'));
     }
 
@@ -78,7 +81,8 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = DB::table('clients')->where('id', $id)->first();
-        return view('admin.client.edit', compact('client'));
+        $workers = DB::table('users')->where('role', 0)->where('status', 1)->get();
+        return view('admin.client.edit', compact('client', 'workers'));
     }
 
     /**
@@ -94,30 +98,12 @@ class ClientController extends Controller
             'name' => 'required',
             'email' => 'required|unique:clients,email,' . $id
         ]);
-        // $student = DB::table('users')->where('role', 0)->get();
-        // $all = [];
-        // if ($request->status == 0) {
-        //     foreach ($student as $key => $value) {
-        //         $new = json_decode($value->client_id);
-        //         foreach ($new as $key => $val) {
-        //             if ($val == $id) {
-        //                 array_push($all, $val);
-        //                 $notification = array('message' => 'Status cannot be changed.', 'alert-type' => 'error',);
-        //                 return redirect()->back()->with($notification);
-        //             }
-        //         }
-        //     }
-        //     $qsn = QuizQuestion::where('client_id', $id)->get();
-        //     if ($qsn && $qsn->count() > 0) {
-        //         $notification = array('message' => 'Status cannot be changed.', 'alert-type' => 'error',);
-        //         return redirect()->route('admin.client.index')->with($notification);
-        //     }
-        // }
         $data = [];
         $data['name'] = $request->name;
         $data['email'] = $request->email;
         $data['address'] = $request->address;
         $data['phone'] = $request->phone;
+        $data['worker_id'] = $request->worker_id;
         $data['status'] = $request->status;
         $data['order_id'] = $request->order_id;
         $data['updated_at'] = Carbon::now();
@@ -136,23 +122,7 @@ class ClientController extends Controller
      */
     public function delete($id)
     {
-        // $student = DB::table('users')->where('role', 0)->get();
-        // $all = [];
-        // foreach ($student as $key => $value) {
-        //     $new = json_decode($value->client_id);
-        //     foreach ($new as $key => $val) {
-        //         if ($val == $id) {
-        //             array_push($all, $val);
-        //             $notification = array('message' => 'client cannot be deleted.', 'alert-type' => 'error',);
-        //             return redirect()->route('admin.client.index')->with($notification);
-        //         }
-        //     }
-        // }
-        // $qsn = QuizQuestion::where('client_id', $id)->get();
-        // if ($qsn && $qsn->count() > 0) {
-        //     $notification = array('message' => 'client cannot be deleted.', 'alert-type' => 'error',);
-        //     return redirect()->route('admin.client.index')->with($notification);
-        // }
+
         DB::table('clients')->where('id', $id)->delete();
 
         $notification = array('message' => 'client deleted successfully.', 'alert-type' => 'success',);

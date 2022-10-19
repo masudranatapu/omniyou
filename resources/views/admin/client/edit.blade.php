@@ -62,6 +62,17 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+                           <label class="form-control-label">Select Worker <span class="tx-danger">*</span></label>
+                           <select name="worker_id" class="form-control" required>
+                            @foreach ($workers as $worker)
+                                <option value="{{ $worker->id }}" {{ $worker->id == $client->worker_id ? 'selected':'' }} >{{ $worker->name }}</option>
+                            @endforeach
+                           </select>
+                           @error('status')
+                            <div class="text-danger">{{$message}}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3">
                            <label class="form-control-label">client Status <span class="tx-danger">*</span></label>
                            <select name="status" class="form-control" required>
                             <option value="1" {{ $client->status == 1 ? 'selected':'' }}>Active</option>

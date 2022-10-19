@@ -26,7 +26,7 @@
                     <div class="table-wrapper">
                         <table id="datatable1" class="table responsive">
                             <thead>
-                                <tr >
+                                <tr>
                                     <th class="text-center">SL</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
@@ -39,13 +39,20 @@
                             </thead>
                             <tbody>
                                 @foreach ($clients as $key => $row)
-                                    <tr  class="text-center">
+                                    <tr class="text-center">
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $row->name }} </td>
                                         <td>{{ $row->email }} </td>
                                         <td>{{ $row->phone }} </td>
                                         <td>{{ $row->address }} </td>
-                                        <td>{{ $row->worker_id ?? 'N/A' }} </td>
+                                        <td>
+                                            @if ($row->worker_id)
+                                                <a href="{{ route('admin.worker.show', $row->worker_id) }}"
+                                                    class="text-info">{{ $row->worker_name }} </a>
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                         {{-- <td>{{ date_format(date_create($row->created_at), 'd, M Y') }} </td> --}}
                                         <td>
                                             @if ($row->status == 1)
