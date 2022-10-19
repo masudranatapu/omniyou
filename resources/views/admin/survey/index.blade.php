@@ -30,7 +30,7 @@
                                     <th class="text-center">SL</th>
                                     <th class="text-center">Survey Name</th>
                                     <th class="text-center">Survey Date</th>
-                                    {{-- <th class="text-center">Questions</th> --}}
+                                    <th class="text-center">Questions</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -41,7 +41,7 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $row->name }} </td>
                                         <td>{{ date_format(date_create($row->date), 'd, M Y') }} </td>
-                                        {{-- <td>
+                                        <td>
                                             @if ($row->question_ids)
                                                 @php
                                                     $questions = DB::table('quiz_questions')
@@ -52,7 +52,7 @@
                                                     <span class="badge bg-info">{{ $item->question }}</span>
                                                 @endforeach
                                             @endif
-                                        </td> --}}
+                                        </td>
                                         {{-- <td>{{ date_format(date_create($row->created_at), 'd, M Y') }} </td> --}}
                                         <td>
                                             @if ($row->status == 1)
