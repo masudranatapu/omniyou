@@ -17,6 +17,12 @@
         <span>Workers</span>
       </a>
     </li>
+	 <li class="nav-item">
+      <a href="{{route('admin.survey.index')}}" class="nav-link {{ Request::routeIs('admin.survey.*') ? 'active' : '' }}">
+        <i class="icon ion-ios-people-outline"></i>
+        <span>Survey</span>
+      </a>
+    </li>
 
     <li class="nav-item">
         <a href="" class="nav-link with-sub @yield('qus_active')">

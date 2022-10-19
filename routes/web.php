@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\SurveyController;
 use App\Http\Controllers\Admin\WorkerController;
 use Illuminate\Support\Facades\Auth;
 
@@ -108,4 +109,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('workers/edit/{id}', [WorkerController::class, 'edit'])->name('admin.worker.edit');
     Route::post('workers/update/{id}', [WorkerController::class, 'update'])->name('admin.worker.update');
     Route::get('workers/delete/{id}', [WorkerController::class, 'destroy'])->name('admin.worker.delete');
+
+    // survey
+    Route::get('survey', [SurveyController::class, 'index'])->name('admin.survey.index');
+    Route::get('survey/create', [SurveyController::class, 'create'])->name('admin.survey.create');
+    Route::post('survey/store', [SurveyController::class, 'store'])->name('admin.survey.store');
+    Route::get('survey/show/{id}', [SurveyController::class, 'show'])->name('admin.survey.show');
+    Route::get('survey/edit/{id}', [SurveyController::class, 'edit'])->name('admin.survey.edit');
+    Route::post('survey/update/{id}', [SurveyController::class, 'update'])->name('admin.survey.update');
+    Route::get('survey/delete/{id}', [SurveyController::class, 'destroy'])->name('admin.survey.delete');
 });

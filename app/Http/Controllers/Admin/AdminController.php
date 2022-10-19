@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
 use App\User;
 use App\QuizQuestion;
 use App\InterviewUser;
@@ -12,6 +11,7 @@ use App\UserFreeWritingAns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
@@ -44,7 +44,7 @@ class AdminController extends Controller
             'image'    => 'image|mimes:jpg,png,jpeg',
         ]);
 
-        $data = User::find(auth::user()->id);
+        $data = User::find(Auth::user()->id);
         $data->name    = $request->name;
         $data->email   = $request->email;
         if ($request->hasFile('image')) {
@@ -75,8 +75,8 @@ class AdminController extends Controller
         $current_user = Auth::user();
         $old_password = $request->old_password;
         if (Hash::check($old_password, $current_user->password)) {
-            $current_user->password = Hash::make($request->new_password);
-            $current_user->update();
+            $current_user_password = Hash::make($request->new_password);
+            DB::table('users')->where('id', $current_user->id)->update(['pssword' => $current_user_password]);
             Auth::logout();
             $notification = array('message' => 'Password Changed', 'alert-type' => 'success');
             return redirect()->route('admin.login')->with($notification);
