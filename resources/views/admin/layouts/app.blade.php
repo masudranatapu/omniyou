@@ -57,7 +57,7 @@
   <body>
 
     <div class="sh-logopanel">
-      <a href="{{route('admin.dashboard')}}" class="sh-logo-text">Quiz</a>
+      <a href="{{route('admin.dashboard')}}" class="sh-logo-text">AB</a>
       <a id="navicon" href="" class="sh-navicon d-none d-xl-block"><i class="icon ion-navicon"></i></a>
       <a id="naviconMobile" href="" class="sh-navicon d-xl-none"><i class="icon ion-navicon"></i></a>
     </div><!-- sh-logopanel -->

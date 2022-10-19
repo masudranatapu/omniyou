@@ -26,9 +26,9 @@ class AdminController extends Controller
     {
         $users = InterviewUser::count();
         $questions = QuizQuestion::count();
-        $students = User::where('role', 0)->count();
-        $courses = DB::table('courses')->where('status', 1)->count();
-        return view('admin.dashboard', compact('users', 'questions', 'students', 'courses'));
+        $workers = User::where('role', 0)->count();
+        $clients = DB::table('clients')->where('status', 1)->count();
+        return view('admin.dashboard', compact('users', 'questions', 'workers', 'clients'));
     }
 
     public function AdminProfile()

@@ -7,20 +7,20 @@
     </li>
 	 <li class="nav-item">
       <a href="{{route('admin.client.index')}}" class="nav-link {{ Request::routeIs('admin.client.*') ? 'active' : '' }}">
-        <i class="icon ion-ios-home-outline"></i>
+        <i class="icon ion-ios-person-outline"></i>
         <span>Clients</span>
       </a>
     </li>
 	 <li class="nav-item">
       <a href="{{route('admin.worker.index')}}" class="nav-link {{ Request::routeIs('admin.worker.*') ? 'active' : '' }}">
-        <i class="icon ion-ios-home-outline"></i>
+        <i class="icon ion-ios-people-outline"></i>
         <span>Workers</span>
       </a>
     </li>
 
     <li class="nav-item">
         <a href="" class="nav-link with-sub @yield('qus_active')">
-          <i class="icon ion-ios-bookmarks-outline"></i>
+          <i class="icon ion-ios-help-outline"></i>
           <span>All Questions</span>
         </a>
         <ul class="nav-sub">
@@ -38,7 +38,7 @@
 
     <li class="nav-item">
       <a href="{{route('quiz.index')}}" class="nav-link {{ Request::routeIs('quiz.index') ? 'active' : '' }}">
-        <i class="icon ion-ios-contact-outline"></i>
-        <span>Quiz</span>
+        <i class="icon ion-ios-analytics-outline"></i>
+        <span>Assesment</span>
       </a>
     </li>
