@@ -3,15 +3,15 @@
 @section('course_actice') active @endsection
 @section('content')
     <div class="card mb-4">
-        <div class="row">
+        <div class="row card-header ">
             <div class="col-6">
-                <div class="card-header page_title">
+                <div class="page_title">
                     <h3>Workers List</h3>
                 </div>
             </div>
             <div class="col-6">
                 <div class="float-right p-2">
-                    <a href="{{ route('admin.worker.create') }}" class="btn btn-primary">Add Worker</a>
+                    <a href="{{ route('admin.worker.create') }}" class="btn-sm btn btn-primary">Add Worker</a>
                 </div>
             </div>
         </div>
@@ -33,6 +33,7 @@
                                     {{-- <th class="text-center">client</th> --}}
                                     <th class="text-center">Initial Password</th>
                                     <th class="text-center">Status</th>
+                                    <th class="text-center">Current Survey</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -66,17 +67,18 @@
                                                 <span class="badge badge-danger">Inactive</span>
                                             @endif
                                         </td>
+                                        <td>{{ $row->survey_name }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('admin.worker.show', $row->id) }}"
-                                                class="btn btn-primary btn-icon">
+                                                class="btn-sm btn btn-primary btn-icon">
                                                 <div><i class="fa fa-eye"></i></div>
                                             </a>
                                             <a href="{{ route('admin.worker.edit', $row->id) }}"
-                                                class="btn btn-primary btn-icon">
+                                                class="btn-sm btn btn-primary btn-icon">
                                                 <div><i class="fa fa-pencil"></i></div>
                                             </a>
                                             <a href="{{ route('admin.worker.delete', $row->id) }}"
-                                                class="btn btn-danger btn-icon" id="delete">
+                                                class="btn-sm btn btn-danger btn-icon" id="delete">
                                                 <div><i class="fa fa-trash"></i></div>
                                             </a>
                                         </td>

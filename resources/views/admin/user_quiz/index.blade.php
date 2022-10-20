@@ -1,20 +1,29 @@
 @extends('admin.layouts.app')
-@section('title', 'Quiz - Quiz List')
+@section('title', 'Quiz - Assessment List')
+
 @section('content')
- <div class="card mb-4">
+ {{-- <div class="card mb-4">
     <div class="row">
           <div class="col-6">
               <div class="card-header page_title">
-                  <h3>Quiz List</h3>
+                  <h3>Assessment List</h3>
               </div>
           </div>
     </div>
-</div>
+</div> --}}
   <div class="row">
     <div class="col-12">
        <div class="card">
           <div class="card-header">
-              <h6>Quiz List</h6>
+              <h6>Assessment List</h6>
+              <select  name="running_survey_id" class="form-control">
+                <option value="">Select any one</option>
+                @foreach ($survey as $item)
+                        <option value="{{ $item->id }}" {{ request()->get('survey_id') == $item->id ? 'selected' : '' }} >
+                            {{ $item->name }}
+                        </option>
+                @endforeach
+            </select>
           </div>
            <div class="card-body">
               <div class="table-wrapper">

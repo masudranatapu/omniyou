@@ -20,7 +20,7 @@ class WorkerController extends Controller
      */
     public function index()
     {
-        $workers =  DB::table('users')->where('role', 0)->get();
+        $workers =  DB::table('users')->select('users.*','survey.name as survey_name')->leftJoin('survey','survey.id','users.running_survey_id')->where('role', 0)->get();
         // dd($workers->course_id);
         // foreach (json_decode(($workers->course_id)) as $key => $value) {
         //     dd($value);
@@ -112,10 +112,11 @@ class WorkerController extends Controller
     public function edit($id)
     {
         $clients = DB::table('clients')->where('status', 1)->where('worker_id', null)->orWhere('worker_id', $id)->get();
+        $survey = DB::table('survey')->where('status', 1)->get();
         $worker =  DB::table('users')->where('id', $id)->first();
         $old_client = DB::table('clients')->where('worker_id', $id)->pluck('id')->toArray();
         // dd($old_client);
-        return view('admin.workers.edit', compact('worker', 'clients', 'old_client'));
+        return view('admin.workers.edit', compact('worker', 'clients', 'old_client','survey'));
     }
 
     /**
@@ -135,10 +136,12 @@ class WorkerController extends Controller
         $data['email'] = $request->email;
         $data['client_id'] = json_encode($request->client_id);
         $data['status'] = $request->status;
+        $data['running_survey_id'] = $request->running_survey_id;
         $data['created_at'] = Carbon::now();
         DB::table('users')->where('id', $id)->update($data);
         $client_id = $request->assign_client;
         $previous_client = DB::table('clients')->where('worker_id', $id)->pluck('id')->toArray();
+
         if (!empty($previous_client) || $client_id && $request->status == 0) {
             foreach ($previous_client as $key => $value) {
                 DB::table('clients')->where('id', $value)->update(['worker_id' => null]);

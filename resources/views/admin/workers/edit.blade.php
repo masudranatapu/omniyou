@@ -51,9 +51,26 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-control-label">Active Survey <span class="tx-danger">*</span></label>
+                                    <select  name="running_survey_id" class="form-control">
+                                        <option value="">Select any one</option>
+                                        @foreach ($survey as $item)
+                                                <option value="{{ $item->id }}" {{ $worker->running_survey_id == $item->id ? 'selected' : '' }} >
+                                                    {{ $item->name }}
+                                                </option>
+                                        @endforeach
+                                    </select>
+                                    @error('running_survey_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+{{--
                                 <div class="mb-3">
                                     <label class="form-control-label">Client</label>
-                                    {{-- <input type="text" name="course_id" class="form-control" value="{{ $worker->course_id }}" placeholder="Enter Course"> --}}
                                     <select id="multiple_checkboxes" name="assign_client[]" class="form-select" multiple>
                                         @foreach ($clients as $item)
                                                 <option value="{{ $item->id }}" {{ in_array($item->id, $old_client) ? 'selected':'' }} >
@@ -64,7 +81,8 @@
                                     @error('assign_client')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
+
                                 <div class="mb-3">
                                     <label class="form-control-label">worker Status <span
                                             class="tx-danger">*</span></label>

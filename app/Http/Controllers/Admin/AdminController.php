@@ -90,7 +90,8 @@ class AdminController extends Controller
     public function QuizList()
     {
         $interview_user = InterviewUser::orderBy('id', 'desc')->get();
-        return view('admin.user_quiz.index', compact('interview_user'));
+        $survey = DB::table('survey')->get();
+        return view('admin.user_quiz.index', compact('interview_user','survey'));
     }
 
     public function QuizView($id)
