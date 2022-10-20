@@ -1,26 +1,24 @@
 @extends('admin.layouts.app')
+
 @section('title', 'Quiz - Questions List')
+
 @section('qus_active') active @endsection
+
 @section('content')
-    <div class="card mb-4">
-        <div class="row">
-            <div class="col-6">
-                <div class="card-header page_title">
-                    <h3>Questions List</h3>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="float-right p-2">
-                    <a href="{{ route('question.create') }}" class="btn btn-primary">Add Question</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Questions List</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <h3>Questions List</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                <a href="{{ route('question.create') }}" class="btn btn-primary">Add Question</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-wrapper">
@@ -100,5 +98,4 @@
             </div>
         </div>
     </div>
-
 @endsection

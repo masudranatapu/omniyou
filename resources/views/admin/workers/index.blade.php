@@ -2,25 +2,20 @@
 @section('title', 'Workers')
 @section('course_actice') active @endsection
 @section('content')
-    <div class="card mb-4">
-        <div class="row card-header ">
-            <div class="col-6">
-                <div class="page_title">
-                    <h3>Workers List</h3>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="float-right p-2">
-                    <a href="{{ route('admin.worker.create') }}" class="btn-sm btn btn-primary">Add Worker</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Workers List</h6>
+                    <div class="row card-header">
+                        <div class="col-6">
+                            <h3>Workers List</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                <a href="{{ route('admin.worker.create') }}" class="btn-sm btn btn-primary">Add Worker</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-wrapper">

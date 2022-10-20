@@ -92,13 +92,25 @@ class AdminController extends Controller
         $interview_user = InterviewUser::orderBy('id', 'desc')->get();
         $survey = DB::table('survey')->get();
 
-        $clients_survey = DB::table('clients_survey')
-        ->select('clients_survey.*','survey.name as survey_name','survey.date as survey_date','survey.question_ids','worker.name as worker_name','clients.name as client_name')
-        ->leftJoin('survey','survey.id','clients_survey.survey_id')
-        ->leftJoin('users as worker','worker.id','clients_survey.worker_id')
-        ->leftJoin('clients', 'clients.id','clients_survey.client_id')
-        ->get();
-        return view('admin.user_quiz.index', compact('interview_user','survey','clients_survey'));
+        if($request->selectserveryid == 1) {
+            $clients_survey = DB::table('clients_survey')
+            ->select('clients_survey.*','survey.name as survey_name','survey.date as survey_date','survey.question_ids','worker.name as worker_name','clients.name as client_name')
+            ->leftJoin('survey','survey.id','clients_survey.survey_id')
+            ->leftJoin('users as worker','worker.id','clients_survey.worker_id')
+            ->leftJoin('clients', 'clients.id','clients_survey.client_id')
+            ->where('survey_id', $request->survey_id)
+            ->get();
+            // dd($clients_survey);
+            return view('admin.user_quiz.index', compact('interview_user','survey','clients_survey'));
+        }else {
+            $clients_survey = DB::table('clients_survey')
+            ->select('clients_survey.*','survey.name as survey_name','survey.date as survey_date','survey.question_ids','worker.name as worker_name','clients.name as client_name')
+            ->leftJoin('survey','survey.id','clients_survey.survey_id')
+            ->leftJoin('users as worker','worker.id','clients_survey.worker_id')
+            ->leftJoin('clients', 'clients.id','clients_survey.client_id')
+            ->get();
+            return view('admin.user_quiz.index', compact('interview_user','survey','clients_survey'));
+        }
     }
 
     public function QuizView($id)
@@ -108,11 +120,11 @@ class AdminController extends Controller
         ->leftJoin('survey','survey.id','clients_survey.survey_id')
         ->leftJoin('users as worker','worker.id','clients_survey.worker_id')
         ->leftJoin('clients', 'clients.id','clients_survey.client_id')
-        ->wehre('clients_survey.id',$id)
+        ->where('clients_survey.id', $id)
         ->first();
 
         $interview_user = InterviewUser::find($id);
-        return view('admin.user_quiz.view', compact('clients_survey', 'ans_questions'));
+        return view('admin.user_quiz.view', compact('clients_survey', 'interview_user'));
     }
     public function destroy($id)
     {

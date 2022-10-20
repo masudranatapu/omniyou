@@ -2,25 +2,20 @@
 @section('title', 'Survey List')
 @section('survey_active') active @endsection
 @section('content')
-    <div class="card mb-4">
-        <div class="row">
-            <div class="col-6">
-                <div class="card-header page_title">
-                    <h3>Survey List</h3>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="float-right p-2">
-                    <a href="{{ route('admin.survey.create') }}" class="btn btn-primary">Add Survey</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Survey List</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <h3>Survey List</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                <a href="{{ route('admin.survey.create') }}" class="btn btn-primary">Add Survey</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-wrapper">
