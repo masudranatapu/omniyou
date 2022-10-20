@@ -63,7 +63,7 @@
                                     @enderror
                                     <div class="row">
                                         @foreach ($questions as $item)
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label class="brick tile-picker">
                                                     <input type="checkbox" name="question_ids[]"
                                                         value="{{ $item->id }}">

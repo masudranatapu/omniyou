@@ -31,6 +31,7 @@
                                     <th class="text-center">Survey Name</th>
                                     <th class="text-center">Survey Date</th>
                                     <th class="text-center">Questions</th>
+                                    <th class="text-center">Total Questions</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -52,6 +53,9 @@
                                                     <span class="badge bg-info">{{ $item->question }}</span>
                                                 @endforeach
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{$questions->count()}}
                                         </td>
                                         {{-- <td>{{ date_format(date_create($row->created_at), 'd, M Y') }} </td> --}}
                                         <td>
