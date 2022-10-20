@@ -87,24 +87,32 @@ class AdminController extends Controller
     }
 
 
-    public function QuizList()
+    public function QuizList(Request $request )
     {
         $interview_user = InterviewUser::orderBy('id', 'desc')->get();
         $survey = DB::table('survey')->get();
-        return view('admin.user_quiz.index', compact('interview_user','survey'));
+
+        $clients_survey = DB::table('clients_survey')
+        ->select('clients_survey.*','survey.name as survey_name','survey.date as survey_date','survey.question_ids','worker.name as worker_name','clients.name as client_name')
+        ->leftJoin('survey','survey.id','clients_survey.survey_id')
+        ->leftJoin('users as worker','worker.id','clients_survey.worker_id')
+        ->leftJoin('clients', 'clients.id','clients_survey.client_id')
+        ->get();
+        return view('admin.user_quiz.index', compact('interview_user','survey','clients_survey'));
     }
 
     public function QuizView($id)
     {
-        $interview_user = InterviewUser::find($id);
+        $clients_survey = DB::table('clients_survey')
+        ->select('clients_survey.*','survey.name as survey_name','survey.date as survey_date','survey.question_ids','worker.name as worker_name','clients.name as client_name')
+        ->leftJoin('survey','survey.id','clients_survey.survey_id')
+        ->leftJoin('users as worker','worker.id','clients_survey.worker_id')
+        ->leftJoin('clients', 'clients.id','clients_survey.client_id')
+        ->wehre('clients_survey.id',$id)
+        ->first();
 
-        if ($interview_user->quiz_type == "A") {
-            $ans_questions = UserQuizAnswer::where('interview_user_id', $id)->get();
-            return view('admin.user_quiz.view', compact('interview_user', 'ans_questions'));
-        } else {
-            $ans_questions = UserFreeWritingAns::where('interview_user_id', $id)->get();
-            return view('admin.user_quiz.free_writing', compact('interview_user', 'ans_questions'));
-        }
+        $interview_user = InterviewUser::find($id);
+        return view('admin.user_quiz.view', compact('clients_survey', 'ans_questions'));
     }
     public function destroy($id)
     {
