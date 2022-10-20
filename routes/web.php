@@ -109,7 +109,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('workers/edit/{id}', [WorkerController::class, 'edit'])->name('admin.worker.edit');
     Route::post('workers/update/{id}', [WorkerController::class, 'update'])->name('admin.worker.update');
     Route::get('workers/delete/{id}', [WorkerController::class, 'destroy'])->name('admin.worker.delete');
-
+    Route::get('workers/survey-client-add/{id}', [WorkerController::class, 'addSurveyUser'])->name('admin.serveyuser.add');
+    Route::post('workers/survey-assigned-client', [WorkerController::class, 'assignedClient'])->name('admin.worker.assignedclient');
+    
     // survey
     Route::get('survey', [SurveyController::class, 'index'])->name('admin.survey.index');
     Route::get('survey/create', [SurveyController::class, 'create'])->name('admin.survey.create');
