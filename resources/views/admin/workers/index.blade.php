@@ -69,12 +69,18 @@
                                         </td>
                                         <td>{{ $row->survey_name }}</td>
                                         <td class="text-center">
+                                            @if($row->survey_name)
+                                                <a title="Add users" href="{{ route('admin.serveyuser.add', $row->id) }}"
+                                                    class="btn-sm btn btn-success btn-icon">
+                                                    <div><i class="fa fa-plus"></i></div>
+                                                </a>
+                                            @endif
                                             <a href="{{ route('admin.worker.show', $row->id) }}"
                                                 class="btn-sm btn btn-primary btn-icon">
                                                 <div><i class="fa fa-eye"></i></div>
                                             </a>
                                             <a href="{{ route('admin.worker.edit', $row->id) }}"
-                                                class="btn-sm btn btn-primary btn-icon">
+                                                class="btn-sm btn btn-info btn-icon">
                                                 <div><i class="fa fa-pencil"></i></div>
                                             </a>
                                             <a href="{{ route('admin.worker.delete', $row->id) }}"

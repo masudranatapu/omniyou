@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\StudentNotification;
 use Illuminate\Support\Facades\Notification;
+use Auth;
 
 class WorkerController extends Controller
 {
@@ -195,4 +196,38 @@ class WorkerController extends Controller
         $notification = array('message' => 'Worker deleted successfully.', 'alert-type' => 'success',);
         return redirect()->route('admin.worker.index')->with($notification);
     }
+
+    public function addSurveyUser($id)
+    {
+        $workers = DB::table('users')->where('id', $id)->first();
+        $clients = DB::table('clients')->where('status', 1)->get();
+        return view('admin.workers.surveyuser', compact('workers', 'clients'));
+    }
+
+    public function assignedClient(Request $request)
+    {
+        $this->validate($request, [
+            'client_id' => 'required',
+        ]);
+
+        $clients = $request->client_id;
+        
+        // return $clients;
+        foreach($clients as $key => $client_id){
+            DB::table('clients_survey')->insert([
+                'survey_id' => $request->survey_id,
+                'worker_id' => $request->worker_id,
+                'client_id' => $client_id,
+                'date' => date('Y-m-d'),
+                'status' => 0,
+                'created_at' => Carbon::now(),
+                'created_by' => Auth::user()->id,
+            ]);
+        }
+
+        $notification = array('message' => 'Client successfully added', 'alert-type' => 'success',);
+        return redirect()->route('admin.worker.index')->with($notification);
+
+    }
+    
 }

@@ -126,6 +126,7 @@
     <script src="{{asset('lib/datatables-responsive/dataTables.responsive.js')}}"></script>
     <script src="{{asset('js/shamcey.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
       <script>
         $('#datatable1').DataTable({
           responsive: true,
