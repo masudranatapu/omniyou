@@ -39,9 +39,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($workers as $key => $row)
-                                    <tr class="text-center">
+                                    <tr >
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $row->name }} </td>
+                                        <td>#W{{ $row->code }} - {{ $row->name }} </td>
                                         <td>{{ $row->email }} </td>
                                         {{-- <td>
                                             @if ($row->client_id != '')
@@ -59,8 +59,8 @@
                                                 <span>N/A</span>
                                             @endif
                                         </td> --}}
-                                        <td>{{ $row->str_pass }} </td>
-                                        <td>
+                                        <td class="text-center"> {{ $row->str_pass }} </td>
+                                        <td class="text-center">
                                             @if ($row->status == 1)
                                                 <span class="badge badge-success">Active</span>
                                             @else
@@ -70,7 +70,7 @@
                                         <td>{{ $row->survey_name }}</td>
                                         <td class="text-center">
                                             @if($row->survey_name)
-                                                <a title="Add users" href="{{ route('admin.serveyuser.add', $row->id) }}"
+                                                <a title="Add users" href="{{ route('admin.serveyuser', [$row->id,$row->running_survey_id]) }}"
                                                     class="btn-sm btn btn-success btn-icon">
                                                     <div><i class="fa fa-plus"></i></div>
                                                 </a>
