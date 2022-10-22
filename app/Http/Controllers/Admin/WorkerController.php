@@ -208,28 +208,23 @@ class WorkerController extends Controller
 
     public function assignedClient(Request $request)
     {
-        $this->validate($request, [
-            'client_id' => 'required',
-        ]);
-
-        $clients = $request->client_id;
-
-        // return $clients;
-        foreach($clients as $key => $client_id){
+        if($request->check == 'checked'){
             DB::table('clients_survey')->insert([
-                'survey_id' => $request->survey_id,
-                'worker_id' => $request->worker_id,
-                'client_id' => $client_id,
+                'survey_id' => $request->survey,
+                'client_id' => $request->client,
+                'worker_id' => $request->worker,
                 'date' => date('Y-m-d'),
-                'status' => 0,
-                'created_at' => Carbon::now(),
+                'status' => 1,
+                'created_at'=> Carbon::now(),
                 'created_by' => Auth::user()->id,
             ]);
+            $result = 1;
+            return response()->json(['success'=>'Client assigned successfully done', 'result' => $result]);
+        }else {
+            DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->delete();
+            $result = 0;
+            return response()->json(['success'=>'Client unassigned successfully done', 'result' => $result]);
         }
-
-        $notification = array('message' => 'Client successfully added', 'alert-type' => 'success',);
-        return redirect()->route('admin.worker.index')->with($notification);
-
     }
 
 }
