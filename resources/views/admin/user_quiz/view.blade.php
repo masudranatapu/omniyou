@@ -128,10 +128,10 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-12 mb-2">
-                                        Same as present address <input class="mx-3" type="checkbox" name="sameaddress" value="sameaddress" class=""/>
+                                        Same as present address <input onclick="myFunction()" class="mx-3" type="checkbox" name="sameaddress" value="sameaddress" class=""/>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" id="showHide">
                                     <div class="col-md-12 mb-3">
                                         <textarea name="" class="form-control"  cols="30" rows="3" placeholder="Permanent Address"></textarea>
                                     </div>
