@@ -21,7 +21,7 @@ class WorkerController extends Controller
      */
     public function index()
     {
-        $workers =  DB::table('users')->select('users.*','survey.name as survey_name')->leftJoin('survey','survey.id','users.running_survey_id')->where('role', 0)->get();
+        $workers =  DB::table('users')->select('users.*','survey.name as survey_name')->leftJoin('survey','survey.id','users.running_survey_id')->where('role', 'worker')->get();
         // dd($workers->course_id);
         // foreach (json_decode(($workers->course_id)) as $key => $value) {
         //     dd($value);
@@ -57,6 +57,7 @@ class WorkerController extends Controller
         $pass = Str::random(8);
         $data = [];
         $data['name'] = $request->name;
+        $data['code'] = DB::table('users')->where('role','worker')->max('code')+1;
         $data['email'] = $request->email;
         $data['client_id'] = json_encode($request->client_id);
         $data['status'] = $request->status;
@@ -197,11 +198,12 @@ class WorkerController extends Controller
         return redirect()->route('admin.worker.index')->with($notification);
     }
 
-    public function addSurveyUser($id)
+    public function surveyUser($wid,$sid)
     {
-        $workers = DB::table('users')->where('id', $id)->first();
+        $workers = DB::table('users')->where('id', $wid)->first();
         $clients = DB::table('clients')->where('status', 1)->get();
-        return view('admin.workers.surveyuser', compact('workers', 'clients'));
+        $client_survey = DB::table('clients_survey')->where('worker_id', $wid)->where('survey_id', $sid)->pluck('client_id')->toArray();
+        return view('admin.workers.surveyuser', compact('workers', 'clients','client_survey'));
     }
 
     public function assignedClient(Request $request)
@@ -211,7 +213,7 @@ class WorkerController extends Controller
         ]);
 
         $clients = $request->client_id;
-        
+
         // return $clients;
         foreach($clients as $key => $client_id){
             DB::table('clients_survey')->insert([
@@ -229,5 +231,5 @@ class WorkerController extends Controller
         return redirect()->route('admin.worker.index')->with($notification);
 
     }
-    
+
 }

@@ -26,42 +26,48 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.worker.assignedclient') }}" method="post">
-                        @csrf
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-control-label">Worker Name</label>
                                     <input type="text" readonly value="{{$workers->name}}" class="form-control">
-                                    <input type="hidden" value="{{$workers->id}}" name="worker_id">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-control-label">Servey Name</label>
                                     <input type="text" readonly value="{{$servey->name}}" class="form-control">
-                                    <input type="hidden" value="{{$servey->id}}" name="survey_id">
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label class="form-control-label">Select Client</label>
-                                    <select name="client_id[]" class="form-control select2 js-example-placeholder-single js-states" multiple>
-                                        @foreach($clients as $client)
-                                            <option value="{{$client->id}}">{{$client->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <h4>Clients</h4>
+                                @foreach($clients as $client)
+                                <label for="cl_lbl_{{$client->id}}" class="pr-5" style="cursor: pointer" >
+                                    <input type="checkbox"
+                                    class="checkbox"
+                                    name="client"
+                                    id="cl_lbl_{{$client->id}}"
+                                     @if(in_array($client->id,$client_survey)) checked @endif
+                                    data-client_id="{{ $client->id }}"
+                                    data-survey_id="{{$servey->id}}"
+                                    data-worker_id="{{$workers->id}}"
+                                     /> {{$client->name}}
+                                </label>
+
+                                @endforeach
+
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+
                             </div>
                         </div>
-                    </form>
+
                 </div><!-- card-body -->
             </div>
         </div>
@@ -69,11 +75,32 @@
 
 @endsection
 @section('js')
-    <script src="{{asset('select2/js/select2.js')}}"></script>
     <script>
-        $('.select2').select2({
-            placeholder: "Select Client",
-            allowClear: true
+        $(".checkbox").change(function() {
+
+            var client = $(this).data('client_id');
+            var survey = $(this).data('survey_id');
+            var worker = $(this).data('worker_id');
+
+          if($(this).prop('checked')) {
+            assignUnassign('checked',worker,survey,client);
+          } else {
+            assignUnassign('unchecked',worker,survey,client);
+          }
+
+
         });
+
+        function assignUnassign(check,worker,survey,client){
+
+            alert(check);
+            alert(worker);
+            alert(survey);
+            alert(client);
+
+
+        }
+
+
     </script>
 @endsection

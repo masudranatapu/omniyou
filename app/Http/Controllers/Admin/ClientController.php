@@ -49,6 +49,7 @@ class ClientController extends Controller
 
         $data = [];
         $data['name'] = $request->name;
+        $data['code'] = DB::table('clients')->max('code')+1;
         $data['email'] = $request->email;
         $data['address'] = $request->address;
         $data['phone'] = $request->phone;
