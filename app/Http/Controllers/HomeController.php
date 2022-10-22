@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()) {
-            if (Auth::user()->role == 'admin') {
+            if (Auth::user()->role == 1) {
                 return redirect()->route('admin.dashboard');
             }
             $course_id = json_decode(Auth::user()->course_id);
