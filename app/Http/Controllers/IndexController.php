@@ -20,6 +20,7 @@ class IndexController extends Controller
     }
     public function quizTwo(Request $request, $step)
     {
+       
         // dd($step);
         // return response()->json()
         if (Session::has('course')) {
