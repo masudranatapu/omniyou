@@ -210,15 +210,15 @@ class WorkerController extends Controller
     {
         if($request->check == 'checked'){
 
-            // $clients_survey_id = DB::table('clients_survey')->insertGetId([
-            //     'survey_id' => $request->survey,
-            //     'client_id' => $request->client,
-            //     'worker_id' => $request->worker,
-            //     'date' => date('Y-m-d'),
-            //     'status' => 1,
-            //     'created_at'=> Carbon::now(),
-            //     'created_by' => Auth::user()->id,
-            // ]);
+            $clients_survey_id = DB::table('clients_survey')->insertGetId([
+                'survey_id' => $request->survey,
+                'client_id' => $request->client,
+                'worker_id' => $request->worker,
+                'date' => date('Y-m-d'),
+                'status' => 1,
+                'created_at'=> Carbon::now(),
+                'created_by' => Auth::user()->id,
+            ]);
             
             $survey = DB::table('survey')->where('id', $request->survey)->first();
 
@@ -238,13 +238,13 @@ class WorkerController extends Controller
                                         ->where('question_no', $quizquestions->id)
                                         ->select('answer_option')
                                         ->get();
-                    return $data = json_encode($quiz_options);
+                    $data = json_encode($quiz_options);
                     
                 }else {
                     $data = NULL;
                 }
 
-                DB::table('clients_survey')->insert([
+                DB::table('clients_survey_questions')->insert([
                     'clients_survey_id' => $clients_survey_id,
                     'quiz_question_id' => $value,
                     'quiz_question' => $quizquestions->question,
@@ -258,6 +258,7 @@ class WorkerController extends Controller
 
             $result = 1;
             return response()->json(['success'=>'Client assigned successfully done', 'result' => $result]);
+
         }else {
             
             DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->delete();
