@@ -209,18 +209,57 @@ class WorkerController extends Controller
     public function assignedClient(Request $request)
     {
         if($request->check == 'checked'){
-            DB::table('clients_survey')->insert([
-                'survey_id' => $request->survey,
-                'client_id' => $request->client,
-                'worker_id' => $request->worker,
-                'date' => date('Y-m-d'),
-                'status' => 1,
-                'created_at'=> Carbon::now(),
-                'created_by' => Auth::user()->id,
-            ]);
+
+            // $clients_survey_id = DB::table('clients_survey')->insertGetId([
+            //     'survey_id' => $request->survey,
+            //     'client_id' => $request->client,
+            //     'worker_id' => $request->worker,
+            //     'date' => date('Y-m-d'),
+            //     'status' => 1,
+            //     'created_at'=> Carbon::now(),
+            //     'created_by' => Auth::user()->id,
+            // ]);
+            
+            $survey = DB::table('survey')->where('id', $request->survey)->first();
+
+            $questions = json_decode($survey->question_ids);
+            
+            foreach ($questions as $key => $value) {
+                
+                $quizquestions = DB::table('quiz_questions')->where('id', $value)->first();
+                // return $quizquestions->question_type;
+                // return $quizquestions->question;
+
+                $data = [];
+
+                if($quizquestions->question_type == 1){
+
+                    $quiz_options = DB::table('quiz_options')
+                                        ->where('question_no', $quizquestions->id)
+                                        ->select('answer_option')
+                                        ->get();
+                    return $data = json_encode($quiz_options);
+                    
+                }else {
+                    $data = NULL;
+                }
+
+                DB::table('clients_survey')->insert([
+                    'clients_survey_id' => $clients_survey_id,
+                    'quiz_question_id' => $value,
+                    'quiz_question' => $quizquestions->question,
+                    'question_type' => $quizquestions->question_type,
+                    'question_options' => $data,
+                    'created_at' => Carbon::now(),
+                    'created_by' => Auth::user()->id,
+                ]);
+
+            }
+
             $result = 1;
             return response()->json(['success'=>'Client assigned successfully done', 'result' => $result]);
         }else {
+            
             DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->delete();
             $result = 0;
             return response()->json(['success'=>'Client unassigned successfully done', 'result' => $result]);
