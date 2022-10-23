@@ -230,14 +230,13 @@ class WorkerController extends Controller
                 // return $quizquestions->question_type;
                 // return $quizquestions->question;
 
-                $data = [];
-
                 if($quizquestions->question_type == 1){
 
                     $quiz_options = DB::table('quiz_options')
                                         ->where('question_no', $quizquestions->id)
                                         ->select('answer_option')
                                         ->get();
+                    
                     $data = json_encode($quiz_options);
                     
                 }else {
