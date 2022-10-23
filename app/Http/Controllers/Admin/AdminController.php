@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -86,7 +87,6 @@ class AdminController extends Controller
         }
     }
 
-
     public function QuizList(Request $request )
     {
         $interview_user = InterviewUser::orderBy('id', 'desc')->get();
@@ -123,9 +123,15 @@ class AdminController extends Controller
         ->where('clients_survey.id', $id)
         ->first();
 
+        // dd($clients_survey);
+
         $interview_user = InterviewUser::find($id);
-        return view('admin.user_quiz.view', compact('clients_survey', 'interview_user'));
+        $ans_questions = UserQuizAnswer::where('interview_user_id',$id)->where('quiz_course_id',$id)->get();
+        
+        return view('admin.user_quiz.view', compact('clients_survey', 'interview_user', 'ans_questions'));
+
     }
+
     public function destroy($id)
     {
 
@@ -143,4 +149,5 @@ class AdminController extends Controller
         $notification = array('message' => 'Quiz Deleted Successfully.', 'alert-type' => 'error',);
         return redirect()->route('quiz.index')->with($notification);
     }
+
 }
