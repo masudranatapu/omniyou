@@ -259,7 +259,9 @@ class WorkerController extends Controller
             return response()->json(['success'=>'Client assigned successfully done', 'result' => $result]);
 
         }else {
-            
+
+            $clientssurvey =  DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->first();
+            DB::table('clients_survey_questions')->where('clients_survey_id', $clientssurvey->id)->delete();
             DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->delete();
             $result = 0;
             return response()->json(['success'=>'Client unassigned successfully done', 'result' => $result]);
