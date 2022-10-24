@@ -1,11 +1,17 @@
 @extends('layouts.app')
-@section('content')
-    <div class="row d-flex justify-content-center">
 
+@php
+
+$setting = settings();
+
+@endphp
+
+@section('content')
+    <div class="row d-flex justify-content-center pt-5">
         @if(!empty($setting->application_logo))
-        <img src="{{asset($setting->application_logo) }}" style="width: 200px" alt="Logo">
+        <img src="{{asset($setting->application_logo) }}" style="width: 200px;" alt="Logo">
     @else
-        <img src="{{asset('img/logo.png')}}" style="width: 200px"  alt="">
+        <img src="{{asset('img/logo.png')}}" style="width: 200px;"  alt="">
     @endif
 
         <h2 class="index_heading">Welcome to {{ settings()->site_name }}</h2>

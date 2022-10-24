@@ -50,7 +50,7 @@
                                         </td>
                                         <td>
                                             @php
-                                                $option = App\QuizOption::where('question_no', $row->id)->get();
+                                                $option = App\Models\QuizOption::where('question_no', $row->id)->get();
                                             @endphp
                                             @foreach ($option as $item)
                                                 {{ $loop->iteration }}. <span>{{ $item->answer_option }}</span><br />
