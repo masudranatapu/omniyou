@@ -208,28 +208,64 @@ class WorkerController extends Controller
 
     public function assignedClient(Request $request)
     {
-        $this->validate($request, [
-            'client_id' => 'required',
-        ]);
+        if($request->check == 'checked'){
 
-        $clients = $request->client_id;
-
-        // return $clients;
-        foreach($clients as $key => $client_id){
-            DB::table('clients_survey')->insert([
-                'survey_id' => $request->survey_id,
-                'worker_id' => $request->worker_id,
-                'client_id' => $client_id,
+            $clients_survey_id = DB::table('clients_survey')->insertGetId([
+                'survey_id' => $request->survey,
+                'client_id' => $request->client,
+                'worker_id' => $request->worker,
                 'date' => date('Y-m-d'),
-                'status' => 0,
-                'created_at' => Carbon::now(),
+                'status' => 1,
+                'created_at'=> Carbon::now(),
                 'created_by' => Auth::user()->id,
             ]);
+            
+            $survey = DB::table('survey')->where('id', $request->survey)->first();
+
+            $questions = json_decode($survey->question_ids);
+            
+            foreach ($questions as $key => $value) {
+                
+                $quizquestions = DB::table('quiz_questions')->where('id', $value)->first();
+                // return $quizquestions->question_type;
+                // return $quizquestions->question;
+
+                if($quizquestions->question_type == 1){
+
+                    $quiz_options = DB::table('quiz_options')
+                                        ->where('question_no', $quizquestions->id)
+                                        ->select('answer_option')
+                                        ->get();
+                    
+                    $data = json_encode($quiz_options);
+                    
+                }else {
+                    $data = NULL;
+                }
+
+                DB::table('clients_survey_questions')->insert([
+                    'clients_survey_id' => $clients_survey_id,
+                    'quiz_question_id' => $value,
+                    'quiz_question' => $quizquestions->question,
+                    'question_type' => $quizquestions->question_type,
+                    'question_options' => $data,
+                    'created_at' => Carbon::now(),
+                    'created_by' => Auth::user()->id,
+                ]);
+
+            }
+
+            $result = 1;
+            return response()->json(['success'=>'Client assigned successfully done', 'result' => $result]);
+
+        }else {
+
+            $clientssurvey =  DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->first();
+            DB::table('clients_survey_questions')->where('clients_survey_id', $clientssurvey->id)->delete();
+            DB::table('clients_survey')->where('survey_id', $request->survey)->where('client_id', $request->client)->where('worker_id', $request->worker)->delete();
+            $result = 0;
+            return response()->json(['success'=>'Client unassigned successfully done', 'result' => $result]);
         }
-
-        $notification = array('message' => 'Client successfully added', 'alert-type' => 'success',);
-        return redirect()->route('admin.worker.index')->with($notification);
-
     }
 
 }
