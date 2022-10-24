@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\ClientController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\Admin\CourseController;
-use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\SurveyController;
 use App\Http\Controllers\Admin\WorkerController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\QuizOptionController;
+use App\Http\Controllers\Admin\QuizQuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,50 +53,53 @@ Route::post('/start-quiz-skip', 'IndexController@quiz_answer_skip')->name('start
 
 
 // Admin Route
-Route::get('/admin/login', [App\Http\Controllers\Auth\LoginController::class, 'AdminLoginPage'])->name('admin.login');
-Route::post('/admin/login', [App\Http\Controllers\Auth\LoginController::class, 'AdminLogin'])->name('login.admin');
+Route::get('/admin/login', [LoginController::class, 'AdminLoginPage'])->name('admin.login');
+Route::post('/admin/login', [LoginController::class, 'AdminLogin'])->name('login.admin');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     // admin dashboard
-    Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     // admin profile
-    Route::get('/profile', [App\Http\Controllers\Admin\AdminController::class, 'AdminProfile'])->name('admin.profile');
-    Route::post('/profile/upate', [App\Http\Controllers\Admin\AdminController::class, 'AdminProfileUpdate'])->name('admin.update.profile');
-    Route::post('/password/change', [App\Http\Controllers\Admin\AdminController::class, 'AdminPasswordChange'])->name('admin.password.change');
+    Route::get('/profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
+    Route::post('/profile/upate', [AdminController::class, 'AdminProfileUpdate'])->name('admin.update.profile');
+    Route::post('/password/change', [AdminController::class, 'AdminPasswordChange'])->name('admin.password.change');
+
+    Route::get('/web-setting', [SettingController::class, 'webSetting'])->name('admin.web.setting');
+    Route::post('/web-setting-update', [SettingController::class, 'webUpdate'])->name('admin.web.setting.update');
 
     //  quiz questions
-    Route::get('/questions', [App\Http\Controllers\Admin\QuizQuestionController::class, 'index'])->name('question.index');
-    Route::get('/questions/create', [App\Http\Controllers\Admin\QuizQuestionController::class, 'create'])->name('question.create');
-    Route::post('/questions/store', [App\Http\Controllers\Admin\QuizQuestionController::class, 'store'])->name('question.store');
-    Route::get('/questions/edit/{id}', [App\Http\Controllers\Admin\QuizQuestionController::class, 'edit'])->name('question.edit');
-    Route::post('/questions/update/{id}', [App\Http\Controllers\Admin\QuizQuestionController::class, 'update'])->name('question.update');
-    Route::get('/questions/delete/{id}', [App\Http\Controllers\Admin\QuizQuestionController::class, 'destroy'])->name('question.destroy');
+    Route::get('/questions', [QuizQuestionController::class, 'index'])->name('question.index');
+    Route::get('/questions/create', [QuizQuestionController::class, 'create'])->name('question.create');
+    Route::post('/questions/store', [QuizQuestionController::class, 'store'])->name('question.store');
+    Route::get('/questions/edit/{id}', [QuizQuestionController::class, 'edit'])->name('question.edit');
+    Route::post('/questions/update/{id}', [QuizQuestionController::class, 'update'])->name('question.update');
+    Route::get('/questions/delete/{id}', [QuizQuestionController::class, 'destroy'])->name('question.destroy');
 
     // Quiz Option
-    Route::get('/quizOptions/create/{id}', [App\Http\Controllers\Admin\QuizOptionController::class, 'QuizOptionCreate'])->name('quizOptions.create');
-    Route::post('/quizOptions/store/{id}', [App\Http\Controllers\Admin\QuizOptionController::class, 'QuizOptionStore'])->name('quizOptions.store');
-    Route::get('/quizOptions/edit/{id}', [App\Http\Controllers\Admin\QuizOptionController::class, 'edit'])->name('quizOptions.edit');
-    Route::post('/quizOptions/update/{id}', [App\Http\Controllers\Admin\QuizOptionController::class, 'update'])->name('quizOptions.update');
-    Route::get('/quizOptions/delete/{id}', [App\Http\Controllers\Admin\QuizOptionController::class, 'destroy'])->name('quizOptions.destroy');
+    Route::get('/quizOptions/create/{id}', [QuizOptionController::class, 'QuizOptionCreate'])->name('quizOptions.create');
+    Route::post('/quizOptions/store/{id}', [QuizOptionController::class, 'QuizOptionStore'])->name('quizOptions.store');
+    Route::get('/quizOptions/edit/{id}', [QuizOptionController::class, 'edit'])->name('quizOptions.edit');
+    Route::post('/quizOptions/update/{id}', [QuizOptionController::class, 'update'])->name('quizOptions.update');
+    Route::get('/quizOptions/delete/{id}', [QuizOptionController::class, 'destroy'])->name('quizOptions.destroy');
 
     // quiz answer
-     Route::get('/quiz-answer', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizAnsIndex'])->name('quiz_ans.index');
-     Route::get('/quiz-answer/create', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizAnsCreate'])->name('quiz_ans.create');
-     Route::get('/quiz-answer/edit', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizAnsEdit'])->name('quiz_ans.edit');
+     Route::get('/quiz-answer', [QuizQuestionController::class, 'QuizAnsIndex'])->name('quiz_ans.index');
+     Route::get('/quiz-answer/create', [QuizQuestionController::class, 'QuizAnsCreate'])->name('quiz_ans.create');
+     Route::get('/quiz-answer/edit', [QuizQuestionController::class, 'QuizAnsEdit'])->name('quiz_ans.edit');
 
      // quiz option old
-      Route::get('/quiz-option', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizOptionIndex'])->name('quiz_option.index');
+      Route::get('/quiz-option', [QuizQuestionController::class, 'QuizOptionIndex'])->name('quiz_option.index');
 
-      Route::get('/quiz-option/create', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizOptionCreate'])->name('quiz_option.create');
-      Route::post('/quiz-option/store', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizOptionStore'])->name('quiz_option.store');
-      Route::get('/quiz-option/edit', [App\Http\Controllers\Admin\QuizQuestionController::class, 'QuizOptionEdit'])->name('quiz_option.edit');
+      Route::get('/quiz-option/create', [QuizQuestionController::class, 'QuizOptionCreate'])->name('quiz_option.create');
+      Route::post('/quiz-option/store', [QuizQuestionController::class, 'QuizOptionStore'])->name('quiz_option.store');
+      Route::get('/quiz-option/edit', [QuizQuestionController::class, 'QuizOptionEdit'])->name('quiz_option.edit');
 
     // user quiz
-    Route::get('/quiz', [App\Http\Controllers\Admin\AdminController::class, 'QuizList'])->name('quiz.index');
-    Route::get('/quiz/view/{id}', [App\Http\Controllers\Admin\AdminController::class, 'QuizView'])->name('quiz.view');
-    Route::get('/user/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('quiz.destroy');
+    Route::get('/quiz', [AdminController::class, 'QuizList'])->name('quiz.index');
+    Route::get('/quiz/view/{id}', [AdminController::class, 'QuizView'])->name('quiz.view');
+    Route::get('/user/delete/{id}', [AdminController::class, 'destroy'])->name('quiz.destroy');
 
     Route::get('clients', [ClientController::class, 'index'])->name('admin.client.index');
     Route::get('clients/create', [ClientController::class, 'create'])->name('admin.client.create');

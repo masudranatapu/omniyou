@@ -57,7 +57,7 @@
   <body>
 
     <div class="sh-logopanel">
-      <a href="{{route('admin.dashboard')}}" class="sh-logo-text">AB</a>
+      <a href="{{route('admin.dashboard')}}" class="sh-logo-text">{{ settings()->site_name ?? '' }}</a>
       <a id="navicon" href="" class="sh-navicon d-none d-xl-block"><i class="icon ion-navicon"></i></a>
       <a id="naviconMobile" href="" class="sh-navicon d-xl-none"><i class="icon ion-navicon"></i></a>
     </div><!-- sh-logopanel -->
@@ -126,7 +126,7 @@
     <script src="{{asset('lib/datatables-responsive/dataTables.responsive.js')}}"></script>
     <script src="{{asset('js/shamcey.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    
+
       <script>
         $('#datatable1').DataTable({
           responsive: true,

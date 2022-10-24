@@ -48,3 +48,10 @@
         <span>Assesment</span>
       </a>
     </li>
+
+    <li class="nav-item">
+        <a href="{{route('admin.web.setting')}}" class="nav-link ">
+          <i class="icon ion-ios-analytics-outline"></i>
+          <span>Settings</span>
+        </a>
+    </li>
