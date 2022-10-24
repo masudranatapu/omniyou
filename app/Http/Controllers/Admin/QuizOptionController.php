@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\QuizOption;
-use App\QuizQuestion;
+use App\Models\QuizOption;
+use App\Models\QuizQuestion;
 use DB;
 class QuizOptionController extends Controller
 {

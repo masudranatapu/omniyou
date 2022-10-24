@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
-use App\QuizQuestion;
-use App\InterviewUser;
-use App\UserCorrectAns;
-use App\UserQuizAnswer;
-use App\UserFreeWritingAns;
+use App\Models\QuizQuestion;
+use App\Models\InterviewUser;
+use App\Models\UserCorrectAns;
+use App\Models\UserQuizAnswer;
+use App\Models\UserFreeWritingAns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -127,7 +127,7 @@ class AdminController extends Controller
 
         $interview_user = InterviewUser::find($id);
         $ans_questions = UserQuizAnswer::where('interview_user_id',$id)->where('quiz_course_id',$id)->get();
-        
+
         return view('admin.user_quiz.view', compact('clients_survey', 'interview_user', 'ans_questions'));
 
     }

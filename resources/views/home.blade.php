@@ -1,13 +1,16 @@
 @extends('layouts.app')
 @section('content')
     <div class="row d-flex justify-content-center">
-        <img src="{{ asset('img/logo.png') }}" alt="logo" style="width: 200px">
-        <h2 class="index_heading">Welcome to HAI ENGLISH</h2>
+
+        @if(!empty($setting->application_logo))
+        <img src="{{asset($setting->application_logo) }}" style="width: 200px" alt="Logo">
+    @else
+        <img src="{{asset('img/logo.png')}}" style="width: 200px"  alt="">
+    @endif
+
+        <h2 class="index_heading">Welcome to {{ settings()->site_name }}</h2>
         <div class="col-md-7 col-xl-5">
-            @php
-                $interview_user = App\InterviewUser::where('id', Session::get('interview_user_id'))->first();
-                // dd($interview_user);
-            @endphp
+
             <div class="box_wrapper first_step mb-5">
                 @auth
                     <form action="{{ route('start-quiz') }}" method="post">

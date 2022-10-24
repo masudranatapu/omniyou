@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\InterviewUser;
-use App\QuizAnswer;
-use App\QuizQuestion;
-use App\UserCorrectAns;
-use App\UserFreeWritingAns;
+use App\Models\InterviewUser;
+use App\Models\QuizAnswer;
+use App\Models\QuizQuestion;
+use App\Models\UserCorrectAns;
+use App\Models\UserFreeWritingAns;
 use Illuminate\Http\Request;
-use App\UserQuizAnswer;
+use App\Models\UserQuizAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -20,7 +20,7 @@ class IndexController extends Controller
     }
     public function quizTwo(Request $request, $step)
     {
-       
+
         // dd($step);
         // return response()->json()
         if (Session::has('course')) {

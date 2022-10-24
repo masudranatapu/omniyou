@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\QuizAnswer;
-use App\QuizOption;
-use App\QuizQuestion;
-use App\UserCorrectAns;
-use App\UserQuizAnswer;
-use App\UserFreeWritingAns;
+use App\Models\QuizAnswer;
+use App\Models\QuizOption;
+use App\Models\QuizQuestion;
+use App\Models\UserCorrectAns;
+use App\Models\UserQuizAnswer;
+use App\Models\UserFreeWritingAns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;

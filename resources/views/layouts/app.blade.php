@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="{{ asset('frontend/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <title>HAI ENGLISH</title>
+    <title>{{ $title ?? settings()->site_name }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('img/logo.png') }}">
     <style>
         a.nav-link {
@@ -40,18 +40,7 @@
         <div class="container">
             <nav class="navbar navbar-expand">
                 <div class="container-fluid">
-                    {{-- @if (!request()->is('/')) --}}
-                    {{-- @endif --}}
-                   <!--  <a class="navbar-brand" href="{{ url('/') }}">
-
-                        <img src="{{ asset('img/logo.png') }}" alt="logo" style="width: 50px">
-                    </a> -->
-
-                    <a href="{{ url('/') }}" class="text-dark">Start Quiz</a>
-                    {{-- <a class="navbar-brand" href="{{ url('/') }}">
-
-                        <h3 style="color: #a030a4">Interview With in The Art Academy</h3>
-                    </a> --}}
+                    <a href="{{ url('/') }}" class="text-dark">{{ settings()->site_name }}</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
