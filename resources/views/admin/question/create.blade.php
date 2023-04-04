@@ -25,7 +25,8 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-control-label">Question <span class="tx-danger">*</span></label>
-                                    <input type="text" name="question" value="{{ old('question') }}" class="form-control" placeholder="Enter question">
+                                    <input type="text" name="question" value="{{ old('question') }}" class="form-control"
+                                        placeholder="Enter question" autocomplete="off">
                                     @error('question')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -33,19 +34,21 @@
                                 <div class="mb-3">
                                     <label class="form-control-label">Question Type <span class="tx-danger">*</span></label>
                                     <select name="question_type" class="form-control" required>
-                                     <option value="" selected disabled>Select Question Type</option>
-                                     <option value="1" {{ old('question_type') == 1 ? 'selected':'' }}>Multiple Choice</option>
-                                     <option value="2" {{ old('question_type') == 2 ? 'selected':'' }}>Free writing answer</option>
+                                        <option value="" selected disabled>Select Question Type</option>
+                                        <option value="1" {{ old('question_type') == 1 ? 'selected' : '' }}>Multiple
+                                            Choice</option>
+                                        <option value="2" {{ old('question_type') == 2 ? 'selected' : '' }}>Free writing
+                                            answer</option>
                                     </select>
                                     @error('question_type')
-                                     <div class="text-danger">{{$message}}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                 </div>
+                                </div>
 
                                 <div class="mb-3">
                                     <label class="form-control-label">Order Number</label>
-                                    <input type="text" name="order_num" class="form-control"
-                                        placeholder="Enter order number">
+                                    <input type="number" min="0" name="order_num" class="form-control"
+                                        placeholder="Enter order number" autocomplete="off">
                                     @error('order_num')
                                         <div class="text-danger">{{ 'The order number field is required.' }}</div>
                                     @enderror

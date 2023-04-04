@@ -2,17 +2,17 @@
 
 @php
 
-$setting = settings();
+    $setting = settings();
 
 @endphp
 
 @section('content')
     <div class="row d-flex justify-content-center pt-5">
-        @if(!empty($setting->application_logo))
-        <img src="{{asset($setting->application_logo) }}" style="width: 200px;" alt="Logo">
-    @else
-        <img src="{{asset('img/logo.png')}}" style="width: 200px;"  alt="">
-    @endif
+        @if (!empty($setting->application_logo))
+            <img src="{{ asset($setting->application_logo) }}" style="width: 200px;" alt="Logo">
+        @else
+            <img src="{{ asset('img/logo.png') }}" style="width: 200px;" alt="">
+        @endif
 
         <h2 class="index_heading">Welcome to {{ settings()->site_name }}</h2>
         <div class="col-md-7 col-xl-5">
@@ -80,7 +80,7 @@ $setting = settings();
                                         </label>
                                     </div>
                                 </div>
-                             </div>
+                            </div>
                         </div>
 
                         <div class="form-group row mb-0">
@@ -91,7 +91,7 @@ $setting = settings();
                             </div>
                         </div>
 
-                         {{-- @if (Route::has('password.request'))
+                        {{-- @if (Route::has('password.request'))
                             <a class="text-center d-block mt-3" href="{{ route('password.request') }}">
                                 {{ __('Forgot Your Password?') }}
                             </a>

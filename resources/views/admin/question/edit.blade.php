@@ -29,7 +29,7 @@
                                 <div class="mb-3">
                                     <label class="form-control-label">Question <span class="tx-danger">*</span></label>
                                     <input type="text" name="question" value="{{ $data->question }}" class="form-control"
-                                        required>
+                                        required autocomplete="off">
                                     @error('question')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -79,8 +79,8 @@
                                 @endif --}}
                                 <div class="mb-3">
                                     <label class="form-control-label">Order Number</label>
-                                    <input type="text" name="order_num" value="{{ $data->order_id }}"
-                                        class="form-control" required>
+                                    <input type="number" min="0" name="order_num" value="{{ $data->order_id }}"
+                                        class="form-control" required autocomplete="off">
                                     @error('order_num')
                                         <div class="text-danger">{{ 'The order number field is required.' }}</div>
                                     @enderror
@@ -89,8 +89,8 @@
                                     <label class="form-control-label">Question Status <span
                                             class="tx-danger">*</span></label>
                                     <select name="status" class="form-control" required>
-                                        <option value="1" {{ $data->status == 1 ? 'selected':'' }} >Active</option>
-                                        <option value="0" {{ $data->status == 0 ? 'selected':'' }} >Inactive</option>
+                                        <option value="1" {{ $data->status == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $data->status == 0 ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger">{{ $message }}</div>
