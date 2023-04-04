@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
+
 @section('title', 'Workers')
+
 @section('course_actice') active @endsection
+
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -29,7 +32,7 @@
                                     <th class="text-center">Initial Password</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Current Survey</th>
-                                    <th class="text-center">Action</th>
+                                    <th class="text-center" width="15%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,13 +91,13 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div><!-- table-wrapper -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
+
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script>

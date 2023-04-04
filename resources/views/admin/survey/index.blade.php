@@ -28,7 +28,7 @@
                                     <th class="text-center">Questions</th>
                                     <th class="text-center">Total Questions</th>
                                     <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
+                                    <th class="text-center" width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +63,7 @@
                                         <td class="text-center">
                                             <a href="{{ route('admin.survey.edit', $row->id) }}"
                                                 class="btn btn-primary btn-icon">
-                                                <div><i class="fa fa-pencil"></i></div>
+                                                <div><i class="fa fa-edit"></i></div>
                                             </a>
                                             <a href="{{ route('admin.survey.delete', $row->id) }}"
                                                 class="btn btn-danger btn-icon" id="delete">
