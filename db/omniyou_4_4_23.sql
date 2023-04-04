@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2022 at 11:20 AM
+-- Generation Time: Apr 04, 2023 at 07:41 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `assesment_builder`
+-- Database: `omniyou`
 --
 
 -- --------------------------------------------------------
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clients` (
   `id` bigint(20) NOT NULL,
+  `code` int(10) NOT NULL DEFAULT 0,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
@@ -44,10 +45,74 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `name`, `email`, `phone`, `address`, `worker_id`, `created_at`, `updated_at`, `status`, `order_id`) VALUES
-(1, 'Mokaddes Hosain', 'mr.mokaddes@gmail.com', '01750899447', 'Address', 4, '2022-10-18 04:10:37', '2022-10-18 23:37:21', 1, 2),
-(2, 'Nahid Hasan', 'nahid@gmail.com', '01750899448', 'Rajshhsi', 15, '2022-10-18 06:02:19', NULL, 1, 3),
-(3, 'Mkds Hsn', 'mkds@gmail.com', '01754564564564', 'Asadjkbhsa', 5, '2022-10-18 05:19:05', NULL, 1, 2);
+INSERT INTO `clients` (`id`, `code`, `name`, `email`, `phone`, `address`, `worker_id`, `created_at`, `updated_at`, `status`, `order_id`) VALUES
+(1, 101, 'Mokaddes Hosain', 'mr.mokaddes@gmail.com', '01750899447', 'Address', NULL, '2022-10-18 04:10:37', '2022-10-18 23:37:21', 1, 2),
+(2, 102, 'Nahid Hasan', 'nahid@gmail.com', '01750899448', 'Rajshhsi', 15, '2022-10-18 06:02:19', NULL, 1, 3),
+(3, 103, 'Mkds Hsn', 'mkds@gmail.com', '01754564564564', 'Asadjkbhsa', NULL, '2022-10-18 05:19:05', NULL, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients_survey`
+--
+
+CREATE TABLE `clients_survey` (
+  `id` int(10) NOT NULL,
+  `survey_id` int(10) DEFAULT NULL,
+  `client_id` int(10) DEFAULT NULL,
+  `worker_id` int(10) DEFAULT NULL COMMENT 'from users table',
+  `date` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT 1 COMMENT '0=inactive,1=waiting for start,2=running,3=complete,4=closed',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `clients_survey`
+--
+
+INSERT INTO `clients_survey` (`id`, `survey_id`, `client_id`, `worker_id`, `date`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(11, 1, 2, 4, '2023-04-04 00:00:00', 1, '2023-04-04 04:40:59', 1, NULL, NULL),
+(12, 1, 3, 4, '2023-04-04 00:00:00', 1, '2023-04-04 04:41:00', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients_survey_questions`
+--
+
+CREATE TABLE `clients_survey_questions` (
+  `id` int(10) NOT NULL,
+  `clients_survey_id` int(10) DEFAULT NULL,
+  `quiz_question_id` int(10) DEFAULT NULL,
+  `quiz_question` varchar(255) DEFAULT NULL,
+  `question_type` int(11) NOT NULL DEFAULT 1,
+  `question_options` text DEFAULT NULL COMMENT 'json',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `clients_survey_questions`
+--
+
+INSERT INTO `clients_survey_questions` (`id`, `clients_survey_id`, `quiz_question_id`, `quiz_question`, `question_type`, `question_options`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(19, 11, 25, 'How do you wanna make Magic?', 1, '[{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"}]', '2023-04-04 04:40:59', 1, NULL, NULL),
+(20, 11, 27, 'How can we create in chaos?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"}]', '2023-04-04 04:40:59', 1, NULL, NULL),
+(21, 11, 29, 'Do you also feel that the university made you lose a part of yourself? can you tell me how?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"Yes, I had internet access.\"}]', '2023-04-04 04:40:59', 1, NULL, NULL),
+(22, 11, 31, 'Shall we forget our backgrounds?', 1, '[{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"}]', '2023-04-04 04:40:59', 1, NULL, NULL),
+(23, 11, 33, 'are we running on the same time? who should hurry up/wait? how long?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"}]', '2023-04-04 04:40:59', 1, NULL, NULL),
+(24, 11, 35, 'what is, who is messing in this space?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"}]', '2023-04-04 04:40:59', 1, NULL, NULL),
+(25, 12, 25, 'How do you wanna make Magic?', 1, '[{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"}]', '2023-04-04 04:41:00', 1, NULL, NULL),
+(26, 12, 27, 'How can we create in chaos?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"}]', '2023-04-04 04:41:00', 1, NULL, NULL),
+(27, 12, 29, 'Do you also feel that the university made you lose a part of yourself? can you tell me how?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"Yes, I had internet access.\"}]', '2023-04-04 04:41:00', 1, NULL, NULL),
+(28, 12, 31, 'Shall we forget our backgrounds?', 1, '[{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"}]', '2023-04-04 04:41:00', 1, NULL, NULL),
+(29, 12, 33, 'are we running on the same time? who should hurry up/wait? how long?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"}]', '2023-04-04 04:41:00', 1, NULL, NULL),
+(30, 12, 35, 'what is, who is messing in this space?', 1, '[{\"answer_option\":\"What art again? ah, yes I am a contemporary artist!\"},{\"answer_option\":\"Yes, I had internet access.\"},{\"answer_option\":\"Yes, where I come from there are artists who work on contemporary issues.\"},{\"answer_option\":\"No, I only knew what contemporary art is after I arrived.\"}]', '2023-04-04 04:41:00', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -187,8 +252,7 @@ INSERT INTO `quiz_answers` (`id`, `question_no`, `option_no`, `answer`, `created
 (32, 28, 121, 'What art again? ah, yes I am a contemporary artist!', '2022-10-11 23:04:02', '2022-10-11 23:04:02'),
 (33, 27, 126, 'Yes, I had internet access.', '2022-10-11 23:04:07', '2022-10-11 23:04:07'),
 (34, 26, 130, 'No, I only knew what contemporary art is after I arrived.', '2022-10-11 23:04:11', '2022-10-11 23:04:11'),
-(35, 25, 134, 'What art again? ah, yes I am a contemporary artist!', '2022-10-11 23:04:16', '2022-10-11 23:04:16'),
-(36, 45, NULL, NULL, '2022-10-19 00:48:15', '2022-10-19 00:48:15');
+(35, 25, 134, 'What art again? ah, yes I am a contemporary artist!', '2022-10-11 23:04:16', '2022-10-11 23:04:16');
 
 -- --------------------------------------------------------
 
@@ -225,10 +289,10 @@ INSERT INTO `quiz_options` (`id`, `question_no`, `answer_option`, `order_id`, `c
 (65, 38, 'I\'m not here for dating', 1, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
 (66, 38, 'why do i have to get along?', 2, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
 (67, 38, 'young people love me!', 3, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
-(68, 39, 'i always wanted to be an artist', 0, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
-(69, 39, 'new life, new opportunities', 1, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
-(70, 39, 'why not?', 2, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
-(71, 39, 'I haven\'t thought about it before.', 3, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
+(68, 39, 'i always wanted to be an artist', 69, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(69, 39, 'new life, new opportunities', 70, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(70, 39, 'why not?', 71, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(71, 39, 'I haven\'t thought about it before.', 72, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
 (72, 40, 'yes, it wasn\'t recognized by the school.', 0, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
 (73, 40, 'only ancient art history', 1, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
 (74, 40, 'no we studied European art history as well', 2, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
@@ -241,14 +305,14 @@ INSERT INTO `quiz_options` (`id`, `question_no`, `answer_option`, `order_id`, `c
 (81, 42, 'to overcome a social hierarchy this system put me in', 1, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
 (82, 42, 'it\'s not far away from where I live', 2, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
 (83, 42, 'I have a few friends here', 3, '2022-04-26 00:00:00', 2, '2022-04-26 00:00:00', 1),
-(84, 43, 'I enjoy telling others about my views', 85, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
-(85, 43, 'I have better things to take care of', 86, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
-(86, 43, 'not sure', 87, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
-(87, 43, 'I enjoy such dialogues', 88, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
-(88, 44, 'Mokaddes', 89, '2022-10-19 00:00:00', 2, '2022-10-19 00:00:00', 1),
-(89, 44, 'Mokaddes Hosain', 90, '2022-10-19 00:00:00', 2, '2022-10-19 00:00:00', 1),
-(90, 44, 'Hosain', 91, '2022-10-19 00:00:00', 2, '2022-10-19 00:00:00', 1),
-(91, 44, 'Mkds', 92, '2022-10-19 00:00:00', 2, '2022-10-19 00:00:00', 1),
+(84, 43, 'I enjoy telling others about my views', 85, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(85, 43, 'I have better things to take care of', 86, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(86, 43, 'not sure', 87, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(87, 43, 'I enjoy such dialogues', 88, '2023-04-04 00:00:00', 2, '2023-04-04 00:00:00', 1),
+(88, 44, 'Mikaddes', 0, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
+(89, 44, 'Mokaddes Hosain', 1, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
+(90, 44, 'Hosain', 2, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
+(91, 44, 'Mkds', 3, '2022-09-28 00:00:00', 2, '2022-09-28 00:00:00', 1),
 (92, 35, 'What art again? ah, yes I am a contemporary artist!', 0, '2022-10-12 00:00:00', 2, '2022-10-12 00:00:00', 1),
 (93, 35, 'Yes, I had internet access.', 1, '2022-10-12 00:00:00', 2, '2022-10-12 00:00:00', 1),
 (94, 35, 'Yes, where I come from there are artists who work on contemporary issues.', 2, '2022-10-12 00:00:00', 2, '2022-10-12 00:00:00', 1),
@@ -338,9 +402,7 @@ INSERT INTO `quiz_questions` (`id`, `question`, `course_id`, `status`, `order_id
 (41, 'Did you draw figures before coming?', 1, 1, 6, 1, NULL, NULL, NULL, NULL),
 (42, 'Why did you apply to our school?', 1, 1, 7, 1, NULL, NULL, NULL, NULL),
 (43, 'Do like to engage in dialogues like (identity, community, nationality)?', 1, 1, 8, 1, NULL, NULL, NULL, NULL),
-(44, 'what is your name?', 2, 1, 1, 1, NULL, NULL, NULL, NULL),
-(45, 'what is your father name?', 1, 1, 1, 2, NULL, NULL, NULL, NULL),
-(46, 'Whats your nid no?', 1, 1, 3, 2, NULL, NULL, NULL, NULL);
+(44, 'what is your name?', 2, 1, 1, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -377,21 +439,20 @@ CREATE TABLE `survey` (
   `name` varchar(255) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `status` int(11) DEFAULT 1 COMMENT '1=active,0=inactive',
-  `question_ids` text DEFAULT NULL COMMENT 'json data (ids)',
   `created_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL
+  `updated_by` int(11) DEFAULT NULL,
+  `question_ids` text DEFAULT NULL COMMENT 'json data (ids)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `survey`
 --
 
-INSERT INTO `survey` (`id`, `name`, `date`, `status`, `question_ids`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Servey One', '2022-10-19 00:00:00', 1, '[\"25\",\"29\",\"34\",\"36\",\"37\"]', '2022-10-19 08:56:23', 1, NULL, NULL),
-(2, 'Servey Oneee', '2022-10-20 00:00:00', 1, '[\"29\",\"34\",\"36\",\"37\"]', '2022-10-19 08:47:58', 1, NULL, NULL),
-(3, 'Survey 3', '2022-10-19 00:00:00', 1, '[\"33\",\"35\",\"36\",\"38\",\"42\",\"46\"]', '2022-10-19 09:13:09', 1, NULL, NULL);
+INSERT INTO `survey` (`id`, `name`, `date`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `question_ids`) VALUES
+(1, 'Survey 2022', '2022-10-20 00:00:00', 1, '2022-10-20 06:32:02', 1, NULL, NULL, '[\"25\",\"27\",\"29\",\"31\",\"33\",\"35\"]'),
+(2, 'Best Friend', '2023-04-20 00:00:00', 1, '2023-04-04 04:38:31', 1, NULL, NULL, '[\"33\",\"34\",\"35\",\"37\",\"38\"]');
 
 -- --------------------------------------------------------
 
@@ -401,10 +462,11 @@ INSERT INTO `survey` (`id`, `name`, `date`, `status`, `question_ids`, `created_a
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `code` int(10) NOT NULL DEFAULT 0,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role` int(11) DEFAULT 0,
+  `role` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'worker',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -412,20 +474,21 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `client_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT 1,
-  `str_pass` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `str_pass` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `running_survey_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `image`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `client_id`, `status`, `str_pass`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, 1, NULL, '$2y$10$fUOHFnHy6eDMZorptwomheHmwgGg8ed7tM63tn.aHoDxleqbLUJ1i', NULL, NULL, '2022-10-12 00:23:56', NULL, 1, NULL),
-(4, 'Mokaddes', 'mr.mokaddes@gmail.com', NULL, 0, NULL, '$2y$10$KLeLAv4Q15/c.TExS12YyuB2qph1mlyiS71x9jsSagIVzh7dXYihq', 'uytSDbSu39FUsYut4M0L3L7b8AdvJxGjJdTKfxWe75LmbUckwSABnSh1VPcj', '2022-10-12 01:27:28', '2022-10-14 22:50:21', '[\"1\",\"3\"]', 1, 'cdvEEITs'),
-(5, 'Muddassir Hoasin', 'muddassir@gmail.com', NULL, 0, NULL, '$2y$10$.TtyvLIJ7AiDUqEKnpmHFuqOcHICqBESvs1W0Ej8oiqsyDDvtBJtG', NULL, '2022-10-18 23:36:52', NULL, 'null', 1, '6ltS3He3'),
-(8, 'Mkds', 'mkds@gmail.com', NULL, 0, NULL, '$2y$10$oT5Ehu2cxQkKKecDUUouA.o8gui1FV13GXZzo0W2/hczdDcJOiSYe', NULL, '2022-10-12 23:45:32', NULL, '[\"1\"]', 1, 'Bv4FsKKO'),
-(9, 'Abdur Rahim', 'rahim@gmail.com', NULL, 0, NULL, '$2y$10$S.Gvo2d7ga57CZCFFHf6eO/c3ZG2MrYhBQoRGIliFnjQcsDuUmDyC', NULL, '2022-10-18 23:36:37', NULL, 'null', 1, 'lPSFrhu3'),
-(15, 'Alif Hosain', 'alif@gmail.com', NULL, 0, NULL, '$2y$10$rYdl0BPoCXT6CpoKnz4Nc.YSzhSREci/zcBTZinMsuFOc.iSqmLla', NULL, '2022-10-18 23:35:17', NULL, 'null', 1, 'CZCkjhJl');
+INSERT INTO `users` (`id`, `code`, `name`, `email`, `image`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `client_id`, `status`, `str_pass`, `running_survey_id`) VALUES
+(1, 0, 'Admin', 'admin@gmail.com', NULL, 'admin', NULL, '$2y$10$fUOHFnHy6eDMZorptwomheHmwgGg8ed7tM63tn.aHoDxleqbLUJ1i', NULL, NULL, '2022-10-12 00:23:56', NULL, 1, NULL, NULL),
+(4, 1001, 'Mokaddes', 'mr.mokaddes@gmail.com', NULL, 'worker', NULL, '$2y$10$KLeLAv4Q15/c.TExS12YyuB2qph1mlyiS71x9jsSagIVzh7dXYihq', 'uytSDbSu39FUsYut4M0L3L7b8AdvJxGjJdTKfxWe75LmbUckwSABnSh1VPcj', '2023-04-03 23:33:14', '2022-10-14 22:50:21', 'null', 1, 'cdvEEITs', 1),
+(5, 1002, 'Muddassir Hoasin', 'muddassir@gmail.com', NULL, 'worker', NULL, '$2y$10$.TtyvLIJ7AiDUqEKnpmHFuqOcHICqBESvs1W0Ej8oiqsyDDvtBJtG', NULL, '2022-10-20 01:27:33', NULL, 'null', 1, '6ltS3He3', 1),
+(8, 1003, 'Mkds', 'mkds@gmail.com', NULL, 'worker', NULL, '$2y$10$oT5Ehu2cxQkKKecDUUouA.o8gui1FV13GXZzo0W2/hczdDcJOiSYe', NULL, '2022-10-20 01:19:55', NULL, 'null', 1, 'Bv4FsKKO', NULL),
+(9, 1004, 'Abdur Rahim', 'rahim@gmail.com', NULL, 'worker', NULL, '$2y$10$S.Gvo2d7ga57CZCFFHf6eO/c3ZG2MrYhBQoRGIliFnjQcsDuUmDyC', NULL, '2022-10-18 23:36:37', NULL, 'null', 1, 'lPSFrhu3', NULL),
+(15, 1005, 'Alif Hosain', 'alif@gmail.com', NULL, 'worker', NULL, '$2y$10$rYdl0BPoCXT6CpoKnz4Nc.YSzhSREci/zcBTZinMsuFOc.iSqmLla', NULL, '2022-10-18 23:35:17', NULL, 'null', 1, 'CZCkjhJl', NULL);
 
 -- --------------------------------------------------------
 
@@ -736,6 +799,35 @@ INSERT INTO `user_quiz_answers` (`id`, `interview_user_id`, `quiz_course_id`, `q
 (356, 3, 3, 5, 34, 97, '2022-10-15 01:06:43', '2022-10-15 01:06:43'),
 (357, 3, 3, 5, 35, 94, '2022-10-15 01:06:46', '2022-10-15 01:06:46');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `web_settings`
+--
+
+CREATE TABLE `web_settings` (
+  `id` int(11) NOT NULL,
+  `site_name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_keyword` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `terms_service` longtext DEFAULT NULL,
+  `privacy_policy` longtext DEFAULT NULL,
+  `application_logo` varchar(255) DEFAULT NULL,
+  `favicon` varchar(255) DEFAULT NULL,
+  `og_logo` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `web_settings`
+--
+
+INSERT INTO `web_settings` (`id`, `site_name`, `address`, `meta_title`, `meta_keyword`, `meta_description`, `terms_service`, `privacy_policy`, `application_logo`, `favicon`, `og_logo`, `created_at`, `updated_at`) VALUES
+(1, 'Omniyou', 'Dhakabd', 'Meta', 'Keywoard', 'Descriptiondsaf', 'Termssadf', 'Privacyasdf', 'uploads/logo/1680585654.png', 'uploads/favicon/1680585684.png', 'uploads/og_logo/1680585684.webp', NULL, '2023-04-03 23:35:47');
+
 --
 -- Indexes for dumped tables
 --
@@ -744,6 +836,18 @@ INSERT INTO `user_quiz_answers` (`id`, `interview_user_id`, `quiz_course_id`, `q
 -- Indexes for table `clients`
 --
 ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `clients_survey`
+--
+ALTER TABLE `clients_survey`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `clients_survey_questions`
+--
+ALTER TABLE `clients_survey_questions`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -832,6 +936,12 @@ ALTER TABLE `user_quiz_answers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `web_settings`
+--
+ALTER TABLE `web_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -840,6 +950,18 @@ ALTER TABLE `user_quiz_answers`
 --
 ALTER TABLE `clients`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `clients_survey`
+--
+ALTER TABLE `clients_survey`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `clients_survey_questions`
+--
+ALTER TABLE `clients_survey_questions`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -869,7 +991,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `quiz_answers`
 --
 ALTER TABLE `quiz_answers`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `quiz_options`
@@ -881,7 +1003,7 @@ ALTER TABLE `quiz_options`
 -- AUTO_INCREMENT for table `quiz_questions`
 --
 ALTER TABLE `quiz_questions`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -893,7 +1015,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -918,6 +1040,12 @@ ALTER TABLE `user_free_writing_ans`
 --
 ALTER TABLE `user_quiz_answers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=358;
+
+--
+-- AUTO_INCREMENT for table `web_settings`
+--
+ALTER TABLE `web_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
