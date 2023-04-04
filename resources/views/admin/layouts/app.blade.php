@@ -9,7 +9,7 @@
     <!-- Meta -->
     <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
     <meta name="author" content="ThemePixels">
-    <title>@yield('title') |  {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('img/logo.png') }}">
     <!-- Toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">

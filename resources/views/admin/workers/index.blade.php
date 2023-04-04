@@ -34,7 +34,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($workers as $key => $row)
-                                    <tr >
+                                    <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>#W{{ $row->code }} - {{ $row->name }} </td>
                                         <td>{{ $row->email }} </td>
@@ -64,8 +64,9 @@
                                         </td>
                                         <td>{{ $row->survey_name }}</td>
                                         <td class="text-center">
-                                            @if($row->survey_name)
-                                                <a title="Add users" href="{{ route('admin.serveyuser', [$row->id,$row->running_survey_id]) }}"
+                                            @if ($row->survey_name)
+                                                <a title="Add users"
+                                                    href="{{ route('admin.serveyuser', [$row->id, $row->running_survey_id]) }}"
                                                     class="btn-sm btn btn-success btn-icon">
                                                     <div><i class="fa fa-plus"></i></div>
                                                 </a>

@@ -28,20 +28,20 @@ class SettingController extends Controller
         if(!$setting->status) {
 
             $notification = array(
-                'messege' => $setting->msg,
+                'message' => $setting->msg,
                 'alert-type' => 'error'
             );
-            return Redirect()->route($setting->redirect_to)->with($notification);
+            return redirect()->back()->with($notification);
         }
 
         $notification = array(
-            'messege' => $setting->msg,
+            'message' => $setting->msg,
             'alert-type' => 'success'
         );
 
         // dd($notification);
 
-        return Redirect()->route($setting->redirect_to)->with($notification);
+        return redirect()->back()->with($notification);
 
     }
 }

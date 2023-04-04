@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\StudentNotification;
 use Illuminate\Support\Facades\Notification;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class WorkerController extends Controller
 {
@@ -219,13 +219,13 @@ class WorkerController extends Controller
                 'created_at'=> Carbon::now(),
                 'created_by' => Auth::user()->id,
             ]);
-            
+
             $survey = DB::table('survey')->where('id', $request->survey)->first();
 
             $questions = json_decode($survey->question_ids);
-            
+
             foreach ($questions as $key => $value) {
-                
+
                 $quizquestions = DB::table('quiz_questions')->where('id', $value)->first();
                 // return $quizquestions->question_type;
                 // return $quizquestions->question;
@@ -236,9 +236,9 @@ class WorkerController extends Controller
                                         ->where('question_no', $quizquestions->id)
                                         ->select('answer_option')
                                         ->get();
-                    
+
                     $data = json_encode($quiz_options);
-                    
+
                 }else {
                     $data = NULL;
                 }

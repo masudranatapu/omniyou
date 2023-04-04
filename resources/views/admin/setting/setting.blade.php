@@ -25,8 +25,7 @@
                             <div class="col-lg-4 col-md-12 mb-3">
                                 <div class="mb-1">
                                     @if (!empty($setting->application_logo))
-                                        <img src="{{ asset($setting->application_logo) }}" width="100"
-                                            alt="Logo">
+                                        <img src="{{ asset($setting->application_logo) }}" width="100" alt="Logo">
                                     @else
                                         <img src="{{ asset('media/default.jpg') }}" width="100" alt="">
                                     @endif
@@ -111,9 +110,8 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
         $('.summernote').summernote({
-
             tabsize: 2,
-            height: 100
+            height: 200,
         });
     </script>
 @endsection
