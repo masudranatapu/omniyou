@@ -33,7 +33,7 @@
                                     <th>Order Number</th>
                                     <th>Status</th>
                                     <th>Options</th>
-                                    <th>Action</th>
+                                    <th width="10%" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,11 +57,11 @@
                                             @endforeach
                                         </td>
                                         {{-- <td>
-                            @php
-                              $answer = App\QuizAnswer::where('question_no',$row->id)->first();
-                            @endphp
-                            <span>{{$answer->answer ?? ''}}</span>
-                          </td> --}}
+                                            @php
+                                                $answer = App\QuizAnswer::where('question_no', $row->id)->first();
+                                            @endphp
+                                            <span>{{ $answer->answer ?? '' }}</span>
+                                        </td> --}}
                                         <td>{{ $row->order_id }} </td>
                                         <td>
                                             @if ($row->status == 1)
@@ -82,7 +82,7 @@
                                         <td class="text-center">
                                             <a href="{{ route('question.edit', $row->id) }}"
                                                 class="btn btn-primary btn-icon">
-                                                <div><i class="fa fa-pencil"></i></div>
+                                                <div><i class="fa fa-edit"></i></div>
                                             </a>
                                             <a href="{{ route('question.destroy', $row->id) }}"
                                                 class="btn btn-danger btn-icon" id="delete">
