@@ -32,13 +32,14 @@
                         <label for="name" class="form-label">Student Full Name</label>
                         <input type="name" class="form-control" name="name" id="name"
                             value="{{ Auth::user()->name }}" placeholder="Your Name">
-                            @error('name')
+                        @error('name')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" name="email" id="email" value="{{ Auth::user()->email }}">
+                        <input type="email" class="form-control" name="email" id="email"
+                            value="{{ Auth::user()->email }}">
                         @error('email')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

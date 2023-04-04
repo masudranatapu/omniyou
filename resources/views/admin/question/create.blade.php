@@ -37,7 +37,8 @@
                                         <option value="" selected disabled>Select Question Type</option>
                                         <option value="1" {{ old('question_type') == 1 ? 'selected' : '' }}>Multiple
                                             Choice</option>
-                                        <option value="2" {{ old('question_type') == 2 ? 'selected' : '' }}>Free writing
+                                        <option value="2" {{ old('question_type') == 2 ? 'selected' : '' }}>Free
+                                            writing
                                             answer</option>
                                     </select>
                                     @error('question_type')

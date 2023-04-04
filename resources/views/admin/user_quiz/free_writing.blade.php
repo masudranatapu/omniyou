@@ -62,7 +62,7 @@
                     </div>
                 </div>
                   @endforeach
-                  
+
               </div>
           </div><!-- card-body -->
       </div>

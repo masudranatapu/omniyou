@@ -50,7 +50,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{$questions->count()}}
+                                            {{ $questions->count() }}
                                         </td>
                                         {{-- <td>{{ date_format(date_create($row->created_at), 'd, M Y') }} </td> --}}
                                         <td>

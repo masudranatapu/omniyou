@@ -56,7 +56,7 @@
                     <div class="table-wrapper">
                         <table id="datatable1" class="table responsive">
                             <thead>
-                                <tr >
+                                <tr>
                                     <th class="text-center">SL</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
@@ -69,7 +69,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($clients as $key => $row)
-                                    <tr  class="text-center">
+                                    <tr class="text-center">
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $row->name }} </td>
                                         <td>{{ $row->email }} </td>

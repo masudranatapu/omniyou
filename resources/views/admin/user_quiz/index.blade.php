@@ -2,12 +2,12 @@
 @section('title', 'Quiz - Assessment List')
 
 @php
-$status_arr = [
-    0 => 'Inactive',
-    1 => 'Waiting for start',
-    2 => 'Running',
-    3 => 'Complete',
-    4 => 'Closed'
+    $status_arr = [
+        0 => 'Inactive',
+        1 => 'Waiting for start',
+        2 => 'Running',
+        3 => 'Complete',
+        4 => 'Closed',
     ];
 @endphp
 
@@ -26,7 +26,8 @@ $status_arr = [
                                 <select name="survey_id" class="form-control" onchange="this.form.submit()">
                                     <option value="">Select any one</option>
                                     @foreach ($survey as $item)
-                                        <option value="{{ $item->id }}" {{ request()->get('survey_id') == $item->id ? 'selected' : '' }} >
+                                        <option value="{{ $item->id }}"
+                                            {{ request()->get('survey_id') == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
                                         </option>
                                     @endforeach
@@ -50,21 +51,24 @@ $status_arr = [
                             </thead>
                             <tbody>
                                 @if (isset($clients_survey) && count($clients_survey) > 0)
-                                    @foreach ($clients_survey as $key => $item )
+                                    @foreach ($clients_survey as $key => $item)
                                         <tr>
-                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $key + 1 }}</td>
                                             <td>
                                                 <strong>{{ $item->survey_name }}</strong>
-                                                <p class="m-0"><i>Date: {{ date('d M Y',strtotime($item->survey_date)) }}</i></p>
-                                                <p class="m-0"><i>Total Question: {{ count(json_decode($item->question_ids)) }}</i></p>
-                                                </td>
+                                                <p class="m-0"><i>Date:
+                                                        {{ date('d M Y', strtotime($item->survey_date)) }}</i></p>
+                                                <p class="m-0"><i>Total Question:
+                                                        {{ count(json_decode($item->question_ids)) }}</i></p>
+                                            </td>
                                             <td>{{ $item->worker_name }}</td>
                                             <td>{{ $item->client_name }}</td>
                                             <td>
                                                 {{ $status_arr[$item->status] ?? '' }}
-                                                </td>
+                                            </td>
                                             <td class="text-center">
-                                                <a href="{{ route('quiz.view',$item->id) }}" class="btn btn-sm btn-primary">View</a>
+                                                <a href="{{ route('quiz.view', $item->id) }}"
+                                                    class="btn btn-sm btn-primary">View</a>
                                             </td>
                                         </tr>
                                     @endforeach

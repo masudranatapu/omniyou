@@ -44,7 +44,7 @@
                                 <label class="form-label" for="email" class="">{{ __('E-Mail Address') }}</label>
 
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required placeholder="Enter your email address">
+                                    name="email" value="{{ old('email') }}" required placeholder="Enter your email address" autocomplete="off">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
 
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password" required
-                                    autocomplete="current-password" placeholder="Enter your password">
+                                    autocomplete="current-password" placeholder="Enter your password" autocomplete="off">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">

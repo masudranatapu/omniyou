@@ -35,7 +35,8 @@
                                 <div class="mb-3">
                                     <label class="form-control-label">Survey Date </label>
                                     <input type="text" name="date" class="form-control" id="datepicker"
-                                        value="{{ date_format(date_create($survey->date), 'Y-m-d') }}" placeholder="YYYY-MM-DD">
+                                        value="{{ date_format(date_create($survey->date), 'Y-m-d') }}"
+                                        placeholder="YYYY-MM-DD">
                                     @error('date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -43,8 +44,8 @@
                                 <div class="mb-3">
                                     <label class="form-control-label">survey Status <span class="tx-danger">*</span></label>
                                     <select name="status" class="form-control" required>
-                                        <option value="1" {{ $survey->status == 1 ? 'selected':'' }}>Active</option>
-                                        <option value="0" {{ $survey->status == 0 ? 'selected':'' }}>Inactive</option>
+                                        <option value="1" {{ $survey->status == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $survey->status == 0 ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger">{{ $message }}</div>
@@ -60,8 +61,8 @@
                                         @foreach ($questions as $item)
                                             <div class="col-md-12">
                                                 <label class="brick tile-picker">
-                                                    <input type="checkbox" name="question_ids[]"
-                                                        value="{{ $item->id }}" {{ in_array($item->id, json_decode($survey->question_ids)) ? 'checked': '' }} >
+                                                    <input type="checkbox" name="question_ids[]" value="{{ $item->id }}"
+                                                        {{ in_array($item->id, json_decode($survey->question_ids)) ? 'checked' : '' }}>
                                                     {{ $item->question }}
                                                 </label>
                                             </div>
