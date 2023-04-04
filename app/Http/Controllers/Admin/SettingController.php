@@ -31,7 +31,7 @@ class SettingController extends Controller
                 'message' => $setting->msg,
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with($notification);
+            return redirect()->route($setting->redirect_to)->with($notification);
         }
 
         $notification = array(
@@ -41,7 +41,7 @@ class SettingController extends Controller
 
         // dd($notification);
 
-        return redirect()->back()->with($notification);
+        return redirect()->route($setting->redirect_to)->with($notification);
 
     }
 }
